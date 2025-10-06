@@ -220,21 +220,28 @@ const achievementsData = {
     'aws-ccp': {
         title: 'AWS Certified Cloud Practitioner',
         date: 'July 28, 2023',
-        description: 'Validates foundational, high-level understanding of AWS Cloud, services, and terminology. This certification demonstrates cloud fluency and foundational AWS knowledge.',
+        description: 'Earners of this certification have a fundamental understanding of IT services and their uses in the AWS Cloud. They demonstrated cloud fluency and foundational AWS knowledge. Badge owners are able to identify essential AWS services necessary to set up AWS-focused projects.',
         verifyLink: 'https://www.credly.com/badges/89828c78-d29f-4374-aa61-b0ff77f2ddc3/public_url',
         image: './assets/images/certifications/aws-ccp.png'
+    },
+    'aws-aip': {
+        title: 'AWS Certified AI Practitioner',
+        date: 'September 7, 2024',
+        description: 'Earners of this badge understand AI, ML, and generative AI concepts, methods, and strategies in general and on AWS. They can determine the correct types of AI/ML technologies to apply to specific use cases and know how to use AI, ML, and generative AI technologies responsibly.',
+        verifyLink: 'https://www.credly.com/badges/e4bf7f8b-b205-47e7-946b-fcfd5681dbdf/public_url',
+        image: './assets/images/certifications/aws-aip.png'
     },
     'aws-saa': {
         title: 'AWS Certified Solutions Architect – Associate',
         date: 'June 28, 2023',
-        description: 'Validates ability to design distributed systems on AWS. Demonstrates understanding of architectural best practices, cost optimization, and security.',
+        description: 'Earners of this certification have a comprehensive understanding of AWS services and technologies. They demonstrated the ability to build secure and robust solutions using architectural design principles based on customer requirements. Badge owners are able to strategically design well-architected distributed systems that are scalable, resilient, efficient, and fault-tolerant.',
         verifyLink: 'https://www.credly.com/badges/350f545b-bfe2-4b7b-87a2-070ec661074b/public_url',
         image: './assets/images/certifications/aws-saa.png'
     },
     'aws-dva': {
         title: 'AWS Certified Developer – Associate',
         date: 'October 6, 2023',
-        description: 'Validates proficiency in developing, deploying, and debugging cloud-based applications using AWS. Demonstrates expertise in AWS services and best practices.',
+        description: 'Earners of this certification have a comprehensive understanding of application life-cycle management. They demonstrated proficiency in writing applications with AWS service APIs, AWS CLI, and SDKs; using containers; and deploying with a CI/CD pipeline. Badge owners are able to develop, deploy, and debug cloud-based applications.',
         verifyLink: 'https://www.credly.com/badges/dde45ac6-10f8-4689-a975-eea16699392f/public_url',
         image: './assets/images/certifications/aws-dva.png'
     },
@@ -244,6 +251,48 @@ const achievementsData = {
         description: 'Recognition for exceptional performance in handling product teams and resolving issues during critical phases. Demonstrated flexibility, teamwork, and dedication to excellence.',
         verifyLink: '#',
         image: './assets/images/certifications/infosys-award.png'
+    },
+    'db-dea': {
+        title: 'Databricks Certified Data Engineer Associate',
+        date: 'October 5, 2025',
+        description: 'Validates ability to use the Databricks Lakehouse Platform to complete introductory data engineering tasks. This includes an understanding of the Lakehouse Platform and its workspace, its architecture, and its capabilities. It also assesses the ability to perform multi-hop architecture ETL tasks using Apache Spark™ SQL and Python in both batch and incrementally processed paradigms.',
+        verifyLink: 'https://api.accredible.com/v1/obi/badge_assertions/2f587585-e4fa-43aa-beeb-a0781305e00f',
+        image: './assets/images/certifications/db-dea.png'
+    },
+    'col-ds': {
+        title: 'Collibra Data Steward Certification',
+        date: 'November 22, 2024',
+        description: 'Earners of the Collibra Data Steward certification document data in a central location for visibility and transparency. They also collaborate with stakeholders to craft a common shared language for data assets.',
+        verifyLink: 'https://www.credly.com/badges/9f8f5b32-68b9-40f0-a7a3-a912e994af42/public_url',
+        image: './assets/images/certifications/col-ds.png'
+    },
+    'col-aigov': {
+        title: 'Collibra AI Governance-Ready',
+        date: 'October 15, 2024',
+        description: 'Recipients of this badge have completed the Getting started with AI Governance course on the Collibra University website.',
+        verifyLink: 'https://www.credly.com/badges/e256d21d-27dc-434f-b6bc-dc76fffdcd70/public_url',
+        image: './assets/images/certifications/col-aigov.png'
+    },
+    'col-ie': {
+        title: 'Collibra Integration Engineer Certification',
+        date: 'October 28, 2024',
+        description: 'Earners of the Collibra Integration Engineer certification can evaluate, write, test and debug API integrations based on business process needs. They have demonstrated knowldge of Collibra REST and Java APIs and can evaluate technical problems and create solutions to those problems.',
+        verifyLink: 'https://www.credly.com/badges/d5e933bc-8006-4dd3-a12b-eddc6f412faf/public_url',
+        image: './assets/images/certifications/col-ie.png'
+    },
+    'col-we': {
+        title: 'Collibra Workflow Engineer Certification',
+        date: 'October 28, 2024',
+        description: 'Earners of this badge can design, create and deploy workflow solutions based on business process needs in the Collibra Platform.',
+        verifyLink: 'https://www.credly.com/badges/f0e31ad3-65b3-4bad-b1eb-14ac9efa1d10/public_url',
+        image: './assets/images/certifications/col-we.png'
+    },
+    'col-sa': {
+        title: 'Collibra Solution Architect Certification',
+        date: 'December 20, 2024',
+        description: 'Earners of the Collibra Solution Architect certification provide technical leadership in the design, planning and implementation of the Collibra Platform. These individuals define the Collibra Operating Model approach and perform fit/gap assessment.',
+        verifyLink: 'https://www.credly.com/badges/1e090003-3b2d-4353-949c-ea29125d3a74/public_url',
+        image: './assets/images/certifications/col-sa.png'
     }
 };
 
