@@ -69,6 +69,49 @@ function updateActiveNav() {
 window.addEventListener('scroll', updateActiveNav);
 
 /*-----------------------------------*\
+  #FLOATING CARDS ANIMATION AND POSITIONING
+\*-----------------------------------*/
+
+function positionFloatingCards() {
+    const cards = document.querySelectorAll('.floating-card');
+    const totalCards = cards.length;
+    const radius = 240; // Distance from center
+    const centerX = 210; // Half of avatar container width
+    const centerY = 210; // Half of avatar container height
+    
+    cards.forEach((card, index) => {
+        // Calculate position
+        const angle = ((360 / totalCards) * index - 90) * (Math.PI / 180); // Convert to radians, start from top
+        
+        // Calculate x and y coordinates
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        
+        // Apply position
+        card.style.left = `${x}px`;
+        card.style.top = `${y}px`;
+        
+        // Add floating animation with different delays
+        card.style.animation = `float ${3 + index * 0.2}s ease-in-out ${index * 0.5}s infinite`;
+    });
+}
+
+// Add floating animation
+const floatKeyframes = `
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}`;
+
+// Add keyframes to document
+const styleSheet = document.createElement('style');
+styleSheet.textContent = floatKeyframes;
+document.head.appendChild(styleSheet);
+
+// Call the function after DOM loads
+document.addEventListener('DOMContentLoaded', positionFloatingCards);
+
+/*-----------------------------------*\
   #INTERSECTION OBSERVER FOR ANIMATIONS
 \*-----------------------------------*/
 
@@ -116,49 +159,49 @@ skillBars.forEach(bar => skillObserver.observe(bar));
   #CONTACT FORM SUBMISSION
 \*-----------------------------------*/
 
-const contactForm = document.getElementById('contactForm');
+// const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+// contactForm.addEventListener('submit', function(e) {
+//     e.preventDefault();
     
-    const btn = this.querySelector('button[type="submit"]');
-    const originalHTML = btn.innerHTML;
+//     const btn = this.querySelector('button[type="submit"]');
+//     const originalHTML = btn.innerHTML;
     
-    // Disable button and show loading state
-    btn.disabled = true;
-    btn.innerHTML = '<span>Sending...</span>';
+//     // Disable button and show loading state
+//     btn.disabled = true;
+//     btn.innerHTML = '<span>Sending...</span>';
     
-    // Simulate form submission (replace with actual form handling)
-    setTimeout(() => {
-        // Success state
-        btn.innerHTML = '<span>Message Sent!</span> <span>✓</span>';
-        btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+//     // Simulate form submission (replace with actual form handling)
+//     setTimeout(() => {
+//         // Success state
+//         btn.innerHTML = '<span>Message Sent!</span> <span>✓</span>';
+//         btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
         
-        // Reset after 2 seconds
-        setTimeout(() => {
-            btn.innerHTML = originalHTML;
-            btn.disabled = false;
-            btn.style.background = '';
-            this.reset();
-        }, 2000);
-    }, 1500);
-});
+//         // Reset after 2 seconds
+//         setTimeout(() => {
+//             btn.innerHTML = originalHTML;
+//             btn.disabled = false;
+//             btn.style.background = '';
+//             this.reset();
+//         }, 2000);
+//     }, 1500);
+// });
 
 /*-----------------------------------*\
   #PREVENT FORM INPUTS FROM BREAKING LAYOUT
 \*-----------------------------------*/
 
-const formInputs = document.querySelectorAll('.form-input, .form-textarea');
+// const formInputs = document.querySelectorAll('.form-input, .form-textarea');
 
-formInputs.forEach(input => {
-    input.addEventListener('input', function() {
-        // Auto-grow textarea
-        if (this.tagName === 'TEXTAREA') {
-            this.style.height = 'auto';
-            this.style.height = this.scrollHeight + 'px';
-        }
-    });
-});
+// formInputs.forEach(input => {
+//     input.addEventListener('input', function() {
+//         // Auto-grow textarea
+//         if (this.tagName === 'TEXTAREA') {
+//             this.style.height = 'auto';
+//             this.style.height = this.scrollHeight + 'px';
+//         }
+//     });
+// });
 
 /*-----------------------------------*\
   #PAGE LOAD ANIMATION
@@ -256,7 +299,7 @@ const achievementsData = {
         title: 'Databricks Certified Data Engineer Associate',
         date: 'October 5, 2025',
         description: 'Validates ability to use the Databricks Lakehouse Platform to complete introductory data engineering tasks. This includes an understanding of the Lakehouse Platform and its workspace, its architecture, and its capabilities. It also assesses the ability to perform multi-hop architecture ETL tasks using Apache Spark™ SQL and Python in both batch and incrementally processed paradigms.',
-        verifyLink: 'https://api.accredible.com/v1/obi/badge_assertions/2f587585-e4fa-43aa-beeb-a0781305e00f',
+        verifyLink: 'https://credentials.databricks.com/2f587585-e4fa-43aa-beeb-a0781305e00f#acc.9Dzule8y',
         image: './assets/images/certifications/db-dea.png'
     },
     'col-ds': {
@@ -296,7 +339,7 @@ const achievementsData = {
     }
 };
 
-// Open modal on badge click
+// achievement modal click handler with this:
 achievementBadges.forEach(badge => {
     badge.addEventListener('click', () => {
         const achievementId = badge.getAttribute('data-achievement');
@@ -308,7 +351,19 @@ achievementBadges.forEach(badge => {
             document.getElementById('modalTitle').textContent = data.title;
             document.getElementById('modalDate').textContent = `Earned: ${data.date}`;
             document.getElementById('modalDescription').textContent = data.description;
-            document.getElementById('modalVerifyLink').href = data.verifyLink;
+            
+            // Fix for verify link
+            const verifyLink = document.getElementById('modalVerifyLink');
+            if (data.verifyLink && data.verifyLink !== '#') {
+                verifyLink.href = data.verifyLink;
+                verifyLink.style.display = 'flex';
+                verifyLink.onclick = (e) => {
+                    e.stopPropagation(); // Prevent modal close when clicking link
+                    window.open(data.verifyLink, '_blank'); // Open in new tab
+                };
+            } else {
+                verifyLink.style.display = 'none';
+            }
             
             // Show modal
             achievementModal.classList.add('active');
@@ -317,10 +372,12 @@ achievementBadges.forEach(badge => {
     });
 });
 
-// Close modal functions
+// Update the closeModal function to remove onclick handler
 function closeModal() {
     achievementModal.classList.remove('active');
     document.body.style.overflow = '';
+    const verifyLink = document.getElementById('modalVerifyLink');
+    verifyLink.onclick = null; // Clean up event handler
 }
 
 modalClose.addEventListener('click', closeModal);
@@ -344,9 +401,39 @@ if (carousel) {
     const badgeCount = badges.length;
     
     if (badgeCount >= 5) {
-        // Clone badges for seamless loop
+        // Clone badges for seamless loop and attach event listeners
         badges.forEach(badge => {
             const clone = badge.cloneNode(true);
+            // Add click event listener to the cloned badge
+            clone.addEventListener('click', () => {
+                const achievementId = clone.getAttribute('data-achievement');
+                const data = achievementsData[achievementId];
+                
+                if (data) {
+                    // Populate modal content
+                    document.getElementById('modalBadgeImg').src = data.image;
+                    document.getElementById('modalTitle').textContent = data.title;
+                    document.getElementById('modalDate').textContent = `Earned: ${data.date}`;
+                    document.getElementById('modalDescription').textContent = data.description;
+                    
+                    // Fix for verify link
+                    const verifyLink = document.getElementById('modalVerifyLink');
+                    if (data.verifyLink && data.verifyLink !== '#') {
+                        verifyLink.href = data.verifyLink;
+                        verifyLink.style.display = 'flex';
+                        verifyLink.onclick = (e) => {
+                            e.stopPropagation();
+                            window.open(data.verifyLink, '_blank');
+                        };
+                    } else {
+                        verifyLink.style.display = 'none';
+                    }
+                    
+                    // Show modal
+                    achievementModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
             carousel.appendChild(clone);
         });
         
@@ -366,3 +453,55 @@ if (carousel) {
         carousel.classList.add('static');
     }
 }
+
+/*-----------------------------------*\
+  #FLOATING SOCIAL BUTTON
+\*-----------------------------------*/
+
+function initFloatingSocial() {
+    const floatingSocial = document.getElementById('floatingSocial');
+    const footer = document.querySelector('footer');
+    
+    if (!floatingSocial || !footer) return;
+
+    let isHovering = false;
+    let hoverTimeout;
+
+    function handleMouseEnter() {
+        clearTimeout(hoverTimeout);
+        isHovering = true;
+        floatingSocial.classList.add('active');
+    }
+
+    function handleMouseLeave() {
+        isHovering = false;
+        hoverTimeout = setTimeout(() => {
+            if (!isHovering) {
+                floatingSocial.classList.remove('active');
+            }
+        }, 300);
+    }
+
+    floatingSocial.addEventListener('mouseenter', handleMouseEnter);
+    floatingSocial.addEventListener('mouseleave', handleMouseLeave);
+
+    function checkFooterVisibility() {
+        const footerRect = footer.getBoundingClientRect();
+        const threshold = window.innerHeight - 50;
+
+        if (footerRect.top <= threshold) {
+            floatingSocial.classList.add('hide');
+        } else {
+            floatingSocial.classList.remove('hide');
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        requestAnimationFrame(checkFooterVisibility);
+    });
+
+    // Initial check
+    checkFooterVisibility();
+}
+
+document.addEventListener('DOMContentLoaded', initFloatingSocial);
