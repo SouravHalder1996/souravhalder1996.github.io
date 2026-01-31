@@ -27,24 +27,24 @@
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png">
 </head>
 
-<div class="floating-social" id="floatingSocial">
-  <button class="floating-button" aria-label="Show social links" data-tooltip="Connect with me">
-    <img src="./assets/images/icons/link.png" alt="Social Links" width="24" height="24">
-  </button>
-  <div class="floating-links">
-    <a href="https://linkedin.com/in/YOUR-LINKEDIN" target="_blank" class="social-link linkedin" aria-label="LinkedIn" data-tooltip="Let's connect on LinkedIn">
-      <img src="./assets/images/icons/linkedin.png" alt="LinkedIn" width="32" height="32">
-    </a>
-    <a href="https://github.com/YOUR-GITHUB" target="_blank" class="social-link github" aria-label="GitHub" data-tooltip="Check my GitHub">
-      <img src="./assets/images/icons/github.png" alt="GitHub" width="32" height="32">
-    </a>
-    <a href="assets/cv.pdf" download class="social-link cv" aria-label="Download CV" data-tooltip="Download my CV">
-      <img src="./assets/images/icons/cv.png" alt="Download CV" width="32" height="32">
-    </a>
-  </div>
-</div>
-
 <body>
+    <div class="floating-social" id="floatingSocial">
+      <button class="floating-button" aria-label="Show social links" data-tooltip="Connect with me">
+        <img src="./assets/images/icons/link.png" alt="Social Links" width="24" height="24">
+      </button>
+      <div class="floating-links">
+        <a href="https://linkedin.com/in/sourav--halder" target="_blank" class="social-link linkedin" aria-label="LinkedIn" data-tooltip="Let's connect on LinkedIn">
+          <img src="./assets/images/icons/linkedin.png" alt="LinkedIn" width="32" height="32">
+        </a>
+        <a href="https://github.com/SouravHalder1996" target="_blank" class="social-link github" aria-label="GitHub" data-tooltip="Check my GitHub">
+          <img src="./assets/images/icons/github.png" alt="GitHub" width="32" height="32">
+        </a>
+        <a href="assets/Sourav_Halder_v5.pdf" download class="social-link cv" aria-label="Download CV" data-tooltip="Download my CV">
+          <img src="./assets/images/icons/cv.png" alt="Download CV" width="32" height="32">
+        </a>
+      </div>
+    </div>
+
     <div class="mesh-background"></div>
     <div class="grain"></div>
 
@@ -61,6 +61,22 @@
                 <li><a href="#projects"><span>Projects</span></a></li>
                 <li><a href="#achievements"><span>Achievements</span></a></li>
                 <li><a href="#contact"><span>Contact</span></a></li>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
             </ul>
         </div>
     </nav>
@@ -183,12 +199,35 @@
             <div class="timeline-item fade-up">
                 <div class="timeline-card">
                     <div class="timeline-date">October 2021 - Present</div>
+                    <h3 class="timeline-title">Associate Consultant @ Infosys Limited</h3>
+                    <p class="timeline-text">
+                        • Developed and maintained 50+ production ETL pipelines using Python, SQL, and AWS Glue, orchestrating data extraction
+                        from multi source SAP ERP, SQL Server, and REST APIs into Redshift data warehouse supporting 14 data marts, ensuring
+                        timely data availability for business dashboards and analytics teams. <br>
+                        • Implemented robust pipeline orchestration with event-driven and schedule-based triggers (Lambda, EventBridge, S3),
+                        incorporating automated retry logic, data validation checks, eliminated synchronization failures by 85%, resolved data
+                        mismatches, and achieved 99.5% pipeline reliability. <br>
+                        • Optimized data delivery cycles to support monthly Sales & Operations Planning (S&OP) processes for leadership and regional
+                        sales heads, cutting data delays by 60% and ensuring accurate, timely insights for strategic sales planning and forecasting. <br>
+                        • Re-architected data extraction pipeline by migrating from direct SQL database to Apache Iceberg-based live layer with
+                        incremental delta loads, achieving 93.75% reduction in data extraction and eliminating performance bottlenecks caused by
+                        high-volume ERP replication traffic. <br>
+                        • Automated incident management by integrating ServiceNow API for pipeline monitoring, enabling automatic ticket creation
+                        and intelligent team assignment for job failures—decreased mean time to resolution (MTTR) by 40% and eliminated manual
+                        triaging overhead.
+                    </p>
+                </div>
+            </div>
+
+            <!-- <div class="timeline-item fade-up">
+                <div class="timeline-card">
+                    <div class="timeline-date">October 2021 - October 2022</div>
                     <h3 class="timeline-title">Systems Engineer @ Infosys Limited</h3>
                     <p class="timeline-text">
                         Managed over 100 API/Microservices across 5 families of different API layers, demonstrating in-depth understanding and optimization of 3-layer API architecture. Implemented continuous support using Splunk, Honeycomb, Grafana, and AWS services. Executed smooth production elevations via Bamboo, minimizing downtime during critical phases.
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -247,18 +286,10 @@
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
                     <span>Docker</span>
                 </div>
-                <!-- <div class="skill-item">
-                    <img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="Linux">
-                    <span>Linux</span>
-                </div> -->
                 <div class="skill-item">
                     <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git">
                     <span>Git</span>
                 </div>
-                <!-- <div class="skill-item">
-                    <img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="Kubernetes">
-                    <span>Kubernetes</span>
-                </div> -->
                 <div class="skill-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C">
                     <span>C</span>
@@ -275,10 +306,6 @@
                     <img src="https://logo.svgcdn.com/d/mysql-original-wordmark.png" alt="MySQL">
                     <span>MySQL</span>
                 </div>
-                <!-- <div class="skill-item">
-                    <img src="https://www.vectorlogo.zone/logos/javascript/javascript-icon.svg" alt="JavaScript">
-                    <span>JavaScript</span>
-                </div> -->
                 <div class="skill-item">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
                     <span>HTML5</span>
@@ -335,33 +362,6 @@
                     <img src="https://logo.svgcdn.com/s/langchain-dark.png" alt="LangChain">
                     <span>LangChain</span>
                 </div>
-                <!-- <div class="skill-item">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="color: #1E90FF;">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 6v12m-6-6h12" stroke="white" stroke-width="2"/>
-                    </svg>
-                    <span>LangGraph</span>
-                </div> -->
-                <!-- <div class="skill-item">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="color: #7C3AED;">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                    <span>Llama</span>
-                </div> -->
-                <!-- <div class="skill-item">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="color: #FF6B6B;">
-                        <rect x="4" y="4" width="16" height="16" rx="2"/>
-                        <text x="12" y="16" text-anchor="middle" font-size="10" fill="white" font-weight="bold">PE</text>
-                    </svg>
-                    <span>Prompt Eng.</span>
-                </div> -->
-                <!-- <div class="skill-item">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="color: #10B981;">
-                        <path d="M12 2L2 7v10l10 5 10-5V7z"/>
-                        <text x="12" y="15" text-anchor="middle" font-size="8" fill="white" font-weight="bold">FT</text>
-                    </svg>
-                    <span>LLM Fine-tuning</span>
-                </div> -->
                 <div class="skill-item">
                     <img src="https://logo.svgcdn.com/l/aws-s3.png" alt="AWS S3">
                     <span>AWS S3</span>
@@ -386,47 +386,15 @@
                     <img src="https://www.vectorlogo.zone/logos/microsoft_powerbi/microsoft_powerbi-icon.svg" alt="Power BI">
                     <span>Power BI</span>
                 </div> -->
-                <div class="skill-item">
+                <!-- <div class="skill-item">
                     <img src="https://www.svgrepo.com/show/373589/excel.svg" alt="Excel">
                     <span>MS Excel</span>
+                </div> -->
+                <div class="skill-item">
+                    <img src="https://cdn.brandfetch.io/idSUrLOWbH/theme/dark/symbol.svg?c=1bxid64Mup7aczewSAYMX&t=1668081624532" alt="Databricks">
+                    <span>Databricks</span>
                 </div>
-                <!-- <div class="skill-item">
-                    <img src="https://www.vectorlogo.zone/logos/visualstudio_code/visualstudio_code-icon.svg" alt="VS Code">
-                    <span>VS Code</span>
-                </div> -->
-                <!-- <div class="skill-item">
-                    <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git">
-                    <span>Git</span>
-                </div> -->
-                <!-- <div class="skill-item">
-                    <img src="https://www.vectorlogo.zone/logos/gitlab/gitlab-icon.svg" alt="GitLab">
-                    <span>GitLab</span>
-                </div> -->
-                <!-- <div class="skill-item">
-                    <img src="https://www.vectorlogo.zone/logos/atlassian_jira/atlassian_jira-icon.svg" alt="Jira">
-                    <span>Jira</span>
-                </div> -->
-                <!-- <div class="skill-item">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="color: #0052CC;">
-                        <circle cx="12" cy="12" r="10"/>
-                        <text x="12" y="16" text-anchor="middle" font-size="10" fill="white" font-weight="bold">AG</text>
-                    </svg>
-                    <span>Agile</span>
-                </div> -->
-                <!-- <div class="skill-item">
-                    <img src="https://www.svgrepo.com/show/18766/stats.svg" alt="EDA">
-                    <span>EDA</span>
-                </div> -->
-                <!-- <div class="skill-item">
-                    <img src="https://www.svgrepo.com/show/530158/statistics.svg" alt="Statistics">
-                    <span>Statistics</span>
-                </div> -->
-                <!-- <div class="skill-item">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="color: #9C27B0;">
-                        <path d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14H9v-6h2v6zm4 0h-2V7h2v10z"/>
-                    </svg>
-                    <span>Data Cleaning</span>
-                </div> -->
+                
             </div>
 
         </div>
@@ -451,20 +419,29 @@
             <button class="filter-btn" data-filter="web">Web Development</button>
         </div>
 
-        <!-- Projects Grid -->
-        <div class="projects-grid">
+        <!-- Projects Carousel -->
+        <div class="projects-carousel-wrapper fade-up">
+            <button class="carousel-arrow left" id="projectsPrev">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            
+            <div class="projects-grid" id="projectsGrid">
             <!-- Project Card 1 -->
-            <div class="project-card fade-up" data-category="cloud">
-                <div class="project-image">
-                    <img src="https://github.com/SouravHalder1996/3tier-webapp-aws-project/raw/main/docs/architecture.png" alt="AWS Three Tier Web Architecture">
-                    <div class="project-overlay">
-                        <a href="https://github.com/SouravHalder1996/3tier-webapp-aws-project" target="_blank" class="project-link">
-                            <span>View on GitHub</span>
-                            <span>→</span>
-                        </a>
-                    </div>
+            <div class="project-card-new fade-up" data-category="cloud">
+                <div class="project-header">
+                    <h3 class="project-title">AWS Three Tier Web Architecture</h3>
+                    <a href="https://github.com/SouravHalder1996/3tier-webapp-aws-project" target="_blank" class="project-github-btn" title="View on GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
                 </div>
-                <div class="project-content">
+                <div class="project-body">
+                    <p class="project-description">
+                        Utilized a public-facing Application Load Balancer, directing client traffic to web-tier EC2 instances within autoscaling groups. The web tier, powered by Nginx, serves a React.js website while redirecting API calls to the internal-facing load balancer.
+                    </p>
                     <div class="project-tags">
                         <span class="tag">AWS</span>
                         <span class="tag">EC2</span>
@@ -472,62 +449,128 @@
                         <span class="tag">VPC</span>
                         <span class="tag">RDS</span>
                     </div>
-                    <h3 class="project-title">AWS Three Tier Web Architecture</h3>
-                    <p class="project-description">
-                        In this project, we utilize a public-facing Application Load Balancer, directing client traffic to our web-tier EC2 instances within autoscaling groups. The web tier, powered by Nginx web servers, serves a React.js website while redirecting API calls to the internal-facing load balancer in the application tier.
-                    </p>
                 </div>
             </div>
 
             <!-- Project Card 2 -->
-            <div class="project-card fade-up" data-category="data-science">
-                <div class="project-image">
-                    <img src="./assets/images/projects/project-2.jpg" alt="Machine Learning Project">
-                    <div class="project-overlay">
-                        <a href="https://github.com/yourusername/project-2" target="_blank" class="project-link">
-                            <span>View on GitHub</span>
-                            <span>→</span>
-                        </a>
-                    </div>
+            <div class="project-card-new fade-up" data-category="cloud">
+                <div class="project-header">
+                    <h3 class="project-title">Big Data Analytics Pipeline Using Modern Data Architecture</h3>
+                    <a href="https://github.com/SouravHalder1996/spotify-data-analysis-aws-project" target="_blank" class="project-github-btn" title="View on GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
                 </div>
-                <div class="project-content">
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">ML</span>
-                        <span class="tag">Pandas</span>
-                    </div>
-                    <h3 class="project-title">Predictive Analytics Model</h3>
+                <div class="project-body">
                     <p class="project-description">
-                        Built a machine learning model for predictive analytics using Python, scikit-learn, and data visualization libraries.
+                        Built a data pipeline to process Spotify data and present it in proper format through a visualization dashboard using AWS services for scalable analytics.
                     </p>
+                    <div class="project-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">S3</span>
+                        <span class="tag">Glue</span>
+                        <span class="tag">Athena</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Project Card 3 -->
-            <div class="project-card fade-up" data-category="automation">
-                <div class="project-image">
-                    <img src="./assets/images/projects/project-3.jpg" alt="Automation Project">
-                    <div class="project-overlay">
-                        <a href="https://github.com/yourusername/project-3" target="_blank" class="project-link">
-                            <span>View on GitHub</span>
-                            <span>→</span>
-                        </a>
-                    </div>
+            <div class="project-card-new fade-up" data-category="automation">
+                <div class="project-header">
+                    <h3 class="project-title">API Automation Framework</h3>
+                    <a href="https://github.com/yourusername/project-3" target="_blank" class="project-github-btn" title="View on GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
                 </div>
-                <div class="project-content">
+                <div class="project-body">
+                    <p class="project-description">
+                        Developed an automation framework for API testing and monitoring with comprehensive error handling and reporting capabilities.
+                    </p>
                     <div class="project-tags">
                         <span class="tag">Python</span>
                         <span class="tag">Automation</span>
                         <span class="tag">API</span>
                     </div>
-                    <h3 class="project-title">API Automation Framework</h3>
-                    <p class="project-description">
-                        Developed an automation framework for API testing and monitoring with comprehensive error handling and reporting.
-                    </p>
                 </div>
             </div>
 
-            <!-- Add more project cards as needed -->
+            <!-- Project Card 1 -->
+            <div class="project-card-new fade-up" data-category="cloud">
+                <div class="project-header">
+                    <h3 class="project-title">AWS Three Tier Web Architecture</h3>
+                    <a href="https://github.com/SouravHalder1996/3tier-webapp-aws-project" target="_blank" class="project-github-btn" title="View on GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        Utilized a public-facing Application Load Balancer, directing client traffic to web-tier EC2 instances within autoscaling groups. The web tier, powered by Nginx, serves a React.js website while redirecting API calls to the internal-facing load balancer.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">EC2</span>
+                        <span class="tag">ELB</span>
+                        <span class="tag">VPC</span>
+                        <span class="tag">RDS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 2 -->
+            <div class="project-card-new fade-up" data-category="cloud">
+                <div class="project-header">
+                    <h3 class="project-title">Big Data Analytics Pipeline Using Modern Data Architecture</h3>
+                    <a href="https://github.com/SouravHalder1996/spotify-data-analysis-aws-project" target="_blank" class="project-github-btn" title="View on GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        Built a data pipeline to process Spotify data and present it in proper format through a visualization dashboard using AWS services for scalable analytics.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">S3</span>
+                        <span class="tag">Glue</span>
+                        <span class="tag">Athena</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 3 -->
+            <div class="project-card-new fade-up" data-category="automation">
+                <div class="project-header">
+                    <h3 class="project-title">API Automation Framework</h3>
+                    <a href="https://github.com/yourusername/project-3" target="_blank" class="project-github-btn" title="View on GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        Developed an automation framework for API testing and monitoring with comprehensive error handling and reporting capabilities.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Automation</span>
+                        <span class="tag">API</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-arrow right" id="projectsNext">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
         </div>
     </section>
 
@@ -733,13 +776,13 @@
             </div>
             <div class="footer-right">
                 <div class="footer-social">
-                    <a href="https://linkedin.com/in/YOUR-LINKEDIN" target="_blank" class="social-link linkedin" aria-label="LinkedIn" data-tooltip="Let's connect on LinkedIn">
+                    <a href="https://linkedin.com/in/sourav--halder" target="_blank" class="social-link linkedin" aria-label="LinkedIn" data-tooltip="Let's connect on LinkedIn">
                     <img src="./assets/images/icons/linkedin.png" alt="LinkedIn" width="32" height="32">
                     </a>
-                    <a href="https://github.com/YOUR-GITHUB" target="_blank" class="social-link github" aria-label="GitHub" data-tooltip="Check my GitHub">
+                    <a href="https://github.com/SouravHalder1996" target="_blank" class="social-link github" aria-label="GitHub" data-tooltip="Check my GitHub">
                     <img src="./assets/images/icons/github.png" alt="GitHub" width="32" height="32">
                     </a>
-                    <a href="assets/cv.pdf" download class="social-link cv" aria-label="Download CV" data-tooltip="Download my CV">
+                    <a href="assets/Sourav_Halder_v5.pdf" download class="social-link cv" aria-label="Download CV" data-tooltip="Download my CV">
                     <img src="./assets/images/icons/cv.png" alt="Download CV" width="32" height="32">
                     </a>
                 </div>

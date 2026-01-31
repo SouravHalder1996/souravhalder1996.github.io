@@ -5,6 +5,40 @@
 'use strict';
 
 /*-----------------------------------*\
+  #THEME TOGGLE
+\*-----------------------------------*/
+
+const themeToggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+
+function initializeTheme() {
+    // Check if user has saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    
+    // If no saved preference, check system preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Determine theme: saved > system preference > light (default)
+    const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    
+    // Apply theme
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+}
+
+// Handle theme toggle button click
+themeToggle.addEventListener('click', () => {
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+});
+
+// Initialize theme on page load
+document.addEventListener('DOMContentLoaded', initializeTheme);
+
+/*-----------------------------------*\
   #NAVBAR SCROLL EFFECT
 \*-----------------------------------*/
 
@@ -76,20 +110,26 @@ function positionFloatingCards() {
     const cards = document.querySelectorAll('.floating-card');
     const totalCards = cards.length;
     const radius = 240; // Distance from center
-    const centerX = 210; // Half of avatar container width
-    const centerY = 210; // Half of avatar container height
+    const containerSize = 420; // Avatar container width/height
+    const centerX = containerSize / 2; // Center of container
+    const centerY = containerSize / 2; // Center of container
+    const cardSize = 60; // Card width/height
     
     cards.forEach((card, index) => {
         // Calculate position
         const angle = ((360 / totalCards) * index - 90) * (Math.PI / 180); // Convert to radians, start from top
         
-        // Calculate x and y coordinates
+        // Calculate x and y coordinates (on the circle)
         const x = centerX + radius * Math.cos(angle);
         const y = centerY + radius * Math.sin(angle);
         
+        // Offset by half card size to center the card on the calculated point
+        const left = x - (cardSize / 2);
+        const top = y - (cardSize / 2);
+        
         // Apply position
-        card.style.left = `${x}px`;
-        card.style.top = `${y}px`;
+        card.style.left = `${left}px`;
+        card.style.top = `${top}px`;
         
         // Add floating animation with different delays
         card.style.animation = `float ${3 + index * 0.2}s ease-in-out ${index * 0.5}s infinite`;
@@ -156,54 +196,6 @@ const skillObserver = new IntersectionObserver((entries) => {
 skillBars.forEach(bar => skillObserver.observe(bar));
 
 /*-----------------------------------*\
-  #CONTACT FORM SUBMISSION
-\*-----------------------------------*/
-
-// const contactForm = document.getElementById('contactForm');
-
-// contactForm.addEventListener('submit', function(e) {
-//     e.preventDefault();
-    
-//     const btn = this.querySelector('button[type="submit"]');
-//     const originalHTML = btn.innerHTML;
-    
-//     // Disable button and show loading state
-//     btn.disabled = true;
-//     btn.innerHTML = '<span>Sending...</span>';
-    
-//     // Simulate form submission (replace with actual form handling)
-//     setTimeout(() => {
-//         // Success state
-//         btn.innerHTML = '<span>Message Sent!</span> <span>✓</span>';
-//         btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-        
-//         // Reset after 2 seconds
-//         setTimeout(() => {
-//             btn.innerHTML = originalHTML;
-//             btn.disabled = false;
-//             btn.style.background = '';
-//             this.reset();
-//         }, 2000);
-//     }, 1500);
-// });
-
-/*-----------------------------------*\
-  #PREVENT FORM INPUTS FROM BREAKING LAYOUT
-\*-----------------------------------*/
-
-// const formInputs = document.querySelectorAll('.form-input, .form-textarea');
-
-// formInputs.forEach(input => {
-//     input.addEventListener('input', function() {
-//         // Auto-grow textarea
-//         if (this.tagName === 'TEXTAREA') {
-//             this.style.height = 'auto';
-//             this.style.height = this.scrollHeight + 'px';
-//         }
-//     });
-// });
-
-/*-----------------------------------*\
   #PAGE LOAD ANIMATION
 \*-----------------------------------*/
 
@@ -215,37 +207,104 @@ window.addEventListener('load', () => {
 });
 
 /*-----------------------------------*\
+  #PROJECTS CAROUSEL NAVIGATION
+\*-----------------------------------*/
+
+const projectsGrid = document.getElementById('projectsGrid');
+const prevBtn = document.getElementById('projectsPrev');
+const nextBtn = document.getElementById('projectsNext');
+
+// Update arrow visibility and states
+function updateProjectArrows() {
+    if (!projectsGrid || !prevBtn || !nextBtn) return;
+    
+    const scrollLeft = Math.round(projectsGrid.scrollLeft);
+    const scrollWidth = projectsGrid.scrollWidth;
+    const clientWidth = projectsGrid.clientWidth;
+    const maxScroll = scrollWidth - clientWidth;
+    
+    console.log('Scroll Debug:', { scrollLeft, scrollWidth, clientWidth, maxScroll }); // Debug line
+
+    // Check if there's overflow
+    if (maxScroll <= 5) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        return;
+    }
+
+    // Show/hide left arrow
+    if (scrollLeft <= 5) {
+        prevBtn.style.display = 'none';
+    } else {
+        prevBtn.style.display = 'flex';
+    }
+
+    // Show/hide right arrow
+    if (scrollLeft >= maxScroll - 5) {
+        nextBtn.style.display = 'none';
+    } else {
+        nextBtn.style.display = 'flex';
+    }
+}
+
+if (projectsGrid && prevBtn && nextBtn) {
+    const scrollAmount = 420; // Card width (380) + gap (40)
+
+    prevBtn.addEventListener('click', () => {
+        projectsGrid.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+        });
+    });
+
+    nextBtn.addEventListener('click', () => {
+        projectsGrid.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
+    });
+
+    projectsGrid.addEventListener('scroll', updateProjectArrows);
+    window.addEventListener('resize', () => {
+        setTimeout(updateProjectArrows, 100);
+    });
+    
+    // Initial check with multiple attempts
+    setTimeout(updateProjectArrows, 100);
+    setTimeout(updateProjectArrows, 500);
+    setTimeout(updateProjectArrows, 1000);
+}
+
+/*-----------------------------------*\
   #PROJECTS FILTER FUNCTIONALITY
 \*-----------------------------------*/
 
 const filterButtons = document.querySelectorAll('.filter-btn');
-const projectCards = document.querySelectorAll('.project-card');
+const projectCards = document.querySelectorAll('.project-card-new');
 
 filterButtons.forEach(button => {
     button.addEventListener('click', () => {
-        // Remove active class from all buttons
         filterButtons.forEach(btn => btn.classList.remove('active'));
-        
-        // Add active class to clicked button
         button.classList.add('active');
         
         const filterValue = button.getAttribute('data-filter');
         
-        // Filter projects
         projectCards.forEach(card => {
             const category = card.getAttribute('data-category');
             
             if (filterValue === 'all' || category === filterValue) {
                 card.classList.remove('hidden');
-                // Trigger animation
-                card.style.animation = 'none';
-                setTimeout(() => {
-                    card.style.animation = '';
-                }, 10);
             } else {
                 card.classList.add('hidden');
             }
         });
+
+        // Reset scroll and update arrows after filtering
+        if (projectsGrid) {
+            projectsGrid.scrollLeft = 0;
+            setTimeout(updateProjectArrows, 100);
+            setTimeout(updateProjectArrows, 300);
+        }
     });
 });
 
