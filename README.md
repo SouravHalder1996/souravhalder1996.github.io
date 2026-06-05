@@ -1,113 +1,36 @@
-# Sourav Halder - Portfolio Website
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A modern, professional portfolio website showcasing my work as a Data Scientist and Cloud Engineer.
+## Getting Started
 
-## 📁 Project Structure
+First, run the development server:
 
-```
-portfolio/
-│
-├── index.html              # Main HTML file
-├── assets/
-│   ├── css/
-│   │   └── style.css      # All styles
-│   ├── js/
-│   │   └── main.js        # JavaScript functionality
-│   └── images/
-│       └── avatar.png     # Profile photo (add your image here)
-│
-└── README.md              # Project documentation
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## 🚀 Features
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- **Modern Design**: Clean, professional UI with gradient accents
-- **Smooth Animations**: Scroll-triggered animations and transitions
-- **Fully Responsive**: Works on all devices and screen sizes
-- **Interactive Navigation**: Smooth scrolling with active link tracking
-- **Contact Form**: Functional contact form with validation
-- **Performance Optimized**: Fast loading with optimized assets
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## 🛠️ Technologies Used
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-- HTML5
-- CSS3 (Custom Properties, Grid, Flexbox, Animations)
-- Vanilla JavaScript (ES6+)
-- Google Fonts (Inter)
+## Learn More
 
-## 📝 Setup Instructions
+To learn more about Next.js, take a look at the following resources:
 
-1. **Download/Clone the repository**
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-2. **Add your photo**:
-   - Place your profile photo in `assets/images/` folder
-   - Name it `avatar.png` (or update the path in `index.html`)
-   - Recommended size: 500x500px minimum
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-3. **Customize content**:
-   - Edit `index.html` to update your personal information
-   - Modify sections: About, Experience, Skills, Contact
+## Deploy on Vercel
 
-4. **Test locally**:
-   - Open `index.html` in your browser
-   - Or use a local server (recommended):
-     ```bash
-     # Using Python
-     python -m http.server 8000
-     
-     # Using Node.js (with http-server)
-     npx http-server
-     ```
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-5. **Deploy**:
-   - Upload to any web hosting service
-   - GitHub Pages, Netlify, Vercel are free options
-
-## 🎨 Customization
-
-### Colors
-Edit CSS custom properties in `assets/css/style.css`:
-```css
-:root {
-    --primary: #3b82f6;
-    --secondary: #8b5cf6;
-    --accent: #06b6d4;
-    /* ... */
-}
-```
-
-### Content
-Update sections in `index.html`:
-- Hero section: Name, title, description
-- About section: Services/expertise
-- Experience: Timeline items
-- Skills: Add/remove skills
-- Contact: Email, phone, location
-
-### Form Integration
-Replace the form submission logic in `assets/js/main.js` with:
-- [EmailJS](https://www.emailjs.com/)
-- [Formspree](https://formspree.io/)
-- [Netlify Forms](https://www.netlify.com/products/forms/)
-- Your own backend API
-
-## 📱 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## 📄 License
-
-This project is open source and available for personal use.
-
-## 👤 Author
-
-**Sourav Halder**
-- Email: halder.sourav1996@gmail.com
-- LinkedIn: [sourav--halder](https://www.linkedin.com/in/sourav--halder)
-
----
-
-Made with ❤️ by Sourav Halder
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
