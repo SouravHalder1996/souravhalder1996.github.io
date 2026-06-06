@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌌 Sourav Halder • Data Scientist & AI/ML Engineer Portfolio
 
-## Getting Started
+A premium, interactive, and responsive web application showcasing expertise in data engineering, machine learning pipelines, cloud architecture, and intelligent software automation.
 
-First, run the development server:
+🚀 **Live Portfolio:** [souravhalder1996.github.io](https://souravhalder1996.github.io/)
 
+---
+
+## 🛠️ Tech Stack & Architecture
+
+- **Core Framework**: Next.js 15 (App Router with Static HTML Export)
+- **Styling & UI**: Tailwind CSS (Vanilla utilities, harmonized dark/light modes)
+- **Icons & Visuals**: Lucide React, Devicon SVG CDN vectors
+- **Form Service**: Web3Forms API (with secure client-side injection)
+- **CI/CD**: GitHub Actions (auto-deploying optimized builds to GitHub Pages)
+
+---
+
+## 🌟 Key Features
+
+### 1. Simulated VS Code IDE
+- Interactive file explorer containing `data_science.ipynb`, `cloud_infra.yml`, and `languages.py` tabs.
+- Clean code styling mimicking the authentic VS Code Dark+ color palette.
+- Dynamic responsive grids displaying cards for databases, cloud providers, and machine learning stacks.
+
+### 2. Interactive Terminal Console
+- Instant telemetry simulation displaying live connection status, host specs, and automation script run outputs.
+
+### 3. Parallel Metrics Dashboard
+- Live count-up telemetry metrics that load instantly and slide smoothly when scrolled into view.
+
+### 4. Horizontal Connected Experience Slider
+- A clean timeline selector showing one role at a time.
+- Uses dynamic flex-segmented timeline connections that self-adjust spacing to prevent overflow.
+
+### 5. Adaptive Navigation Pill
+- Scroll-synchronized floating header navbar that starts transparent and shifts into a shrunken frosted glass pill capsule upon scroll.
+- Incorporates active-section highlighting, including bottom-of-page contact routing.
+
+### 6. Stretch-Aligned Contact Form
+- Visual height equalization keeping both the contact ledger and input form cards perfectly aligned.
+- Complete form validation and vertical alignment centering during successful dispatch transitions.
+
+---
+
+## 💻 Local Development
+
+### Prerequisites
+Make sure you have Node.js (v20 or higher) and npm installed.
+
+### 1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/SouravHalder1996/souravhalder1996.github.io.git
+cd souravhalder1996.github.io
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Environment Setup (Optional)
+To test form submissions locally:
+Create a `.env.local` file in the root directory:
+```env
+NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY="YOUR_WEB3FORMS_ACCESS_KEY_HERE"
+```
+*(If no key is configured, the contact form will automatically fall back to simulation mode, making local layout testing simple without API dependencies).*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Spin up the development server:
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Deployment & CI/CD
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The website is configured to deploy to **GitHub Pages** using **GitHub Actions**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Compilation**: When pushing to `main`, next compiles the site statically:
+   ```bash
+   npm run build
+   ```
+   This generates standard, optimized HTML/CSS/JS bundles in the `./out` directory.
+2. **Key Injection**: The workflow pulls `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` from your repository secrets and injects it into the build env.
+3. **Deployment**: GitHub Pages receives and hosts the static `./out` folder.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+Created by [Sourav Halder](https://github.com/SouravHalder1996). All rights reserved.

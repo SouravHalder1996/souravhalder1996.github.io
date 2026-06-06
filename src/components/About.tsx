@@ -18,7 +18,7 @@ const services: ServiceCard[] = [
     title: "Cloud Architecture",
     description: "Designing and implementing highly scalable, resilient, and cost-effective cloud solutions. Expert in infrastructure automation, serverless computing, and secure networking layouts.",
     icon: <Cloud className="w-6 h-6 text-blue-400" />,
-    tags: ["AWS", "ECS/EC2", "Lambda", "S3", "VPC/IAM", "CloudFront"],
+    tags: ["AWS", "ECS/EC2", "Lambda", "S3", "VPC/IAM", "RDS", "DynamoDB", "CloudWatch"],
     features: [
       "Infrastructure as Code",
       "High Availability Clustering",
@@ -27,20 +27,6 @@ const services: ServiceCard[] = [
     ],
     gradient: "from-blue-500/15 via-transparent to-transparent",
     layer: "INFRASTRUCTURE LAYER",
-  },
-  {
-    title: "Data Science",
-    description: "Extracting actionable insights from complex datasets using advanced mathematics, statistical validation, and intelligent machine learning pipeline orchestration.",
-    icon: <Brain className="w-6 h-6 text-amber-400" />,
-    tags: ["Python", "TensorFlow", "Scikit-Learn", "MLflow", "LangChain"],
-    features: [
-      "Predictive Modeling",
-      "LLM & Agent Architectures",
-      "Feature Engineering",
-      "Neural Network Design"
-    ],
-    gradient: "from-amber-500/15 via-transparent to-transparent",
-    layer: "INTELLIGENCE LAYER",
   },
   {
     title: "Data Engineering",
@@ -55,6 +41,20 @@ const services: ServiceCard[] = [
     ],
     gradient: "from-emerald-500/15 via-transparent to-transparent",
     layer: "ORCHESTRATION LAYER",
+  },
+  {
+    title: "Data Science",
+    description: "Extracting actionable insights from complex datasets using advanced mathematics, statistical validation, and intelligent machine learning pipeline orchestration.",
+    icon: <Brain className="w-6 h-6 text-violet-400" />,
+    tags: ["Python", "TensorFlow", "Scikit-Learn", "MLflow", "LangChain"],
+    features: [
+      "Predictive Modeling",
+      "LLM & Agent Architectures",
+      "Feature Engineering",
+      "Neural Network Design"
+    ],
+    gradient: "from-violet-500/15 via-transparent to-transparent",
+    layer: "INTELLIGENCE LAYER",
   },
 ];
 
@@ -78,7 +78,7 @@ const cardVariants: Variants = {
 
 export default function About() {
   return (
-    <section id="about" className="py-24 relative overflow-hidden bg-background">
+    <section id="about" className="py-24 relative overflow-hidden bg-background scroll-mt-20">
       {/* Decorative light accent element */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none -z-10" />
 

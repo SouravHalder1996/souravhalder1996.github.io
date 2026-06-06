@@ -15,10 +15,10 @@ export default function Home() {
       <Hero />
       <Metrics />
       <About />
-      <Skills />
-      <Projects />
       <Experience />
       <Education />
+      <Skills />
+      <Projects />
       <Credentials />
       <Contact />
       <Footer />

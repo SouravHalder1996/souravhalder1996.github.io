@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import { Menu, X, Command } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
@@ -32,6 +32,14 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
 
+      // Check if we are at the bottom of the page to auto-highlight contact section
+      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
+
+      if (isAtBottom) {
+        setActiveSection(navItems[navItems.length - 1].href.replace("#", ""));
+        return;
+      }
+
       // Simple active section detection
       const sections = navItems.map((item) =>
         document.getElementById(item.href.replace("#", ""))
@@ -48,6 +56,8 @@ export default function Navbar() {
       }
     };
 
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -62,15 +72,17 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex justify-center py-4 px-6`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex justify-center ${
+          isScrolled ? "py-4 px-6" : "py-0 px-0"
+        }`}
       >
         <motion.div
           layout
           transition={{ type: "spring", stiffness: 200, damping: 25 }}
-          className={`flex items-center justify-between border border-slate-200/80 dark:border-border bg-white/80 dark:bg-card/40 backdrop-blur-md transition-all duration-300 ${
+          className={`flex items-center justify-between transition-all duration-300 ${
             isScrolled
-              ? "w-full max-w-6xl rounded-full px-6 py-1.5 shadow-lg shadow-black/10 border-primary/20"
-              : "w-full rounded-none border-x-0 border-t-0 bg-transparent backdrop-blur-none px-6 py-3"
+              ? "w-full max-w-6xl rounded-full px-6 py-1.5 border border-slate-200/80 dark:border-border bg-white/80 dark:bg-card/40 backdrop-blur-md shadow-lg shadow-black/10 border-primary/20"
+              : "w-full rounded-none border-b border-slate-200/20 dark:border-border/50 bg-white/30 dark:bg-[#0f1115]/30 backdrop-blur-md px-8 py-4"
           }`}
         >
           {/* Logo */}
@@ -112,16 +124,21 @@ export default function Navbar() {
 
           {/* Right Action Utilities (Theme + Cmd+K + Mobile Menu Icon) */}
           <div className="flex items-center gap-3">
-            {/* Quick Command Palette visual pill */}
+            {/* Quick Command Palette search/commands pill */}
             <button
               onClick={() => {
                 window.dispatchEvent(new CustomEvent("open-command-palette"));
               }}
-              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-border bg-muted/50 text-[10px] text-muted-foreground font-mono hover:text-foreground hover:border-primary/50 transition-colors cursor-pointer"
-              title="Open Command Palette"
+              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 dark:border-border bg-muted/20 text-muted-foreground hover:text-foreground hover:border-primary/50 hover:bg-muted/40 transition-all duration-200 cursor-pointer"
+              title="Search and Commands (CTRL + K)"
             >
-              <Command className="w-3.5 h-3.5" />
-              <span>K</span>
+              <Search className="w-3.5 h-3.5 opacity-70" />
+              <span className="font-sans text-[11px] font-medium tracking-wide">Search</span>
+              <div className="flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-slate-200 dark:border-border/80 bg-white/70 dark:bg-card/70 text-[9px] font-mono leading-none font-semibold">
+                <span>CTRL</span>
+                <span className="opacity-50">+</span>
+                <span>K</span>
+              </div>
             </button>
 
             <ThemeToggle />

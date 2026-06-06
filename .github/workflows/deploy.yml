@@ -34,6 +34,8 @@ jobs:
         run: npm ci
 
       - name: Build and Export Site
+        env:
+          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY }}
         run: npm run build
 
       - name: Upload Build Artifacts

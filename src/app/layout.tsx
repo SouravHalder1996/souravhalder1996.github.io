@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import CommandPalette from "@/components/CommandPalette";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -40,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${firaCode.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${firaCode.variable} h-full antialiased scroll-smooth`}
       suppressHydrationWarning
     >
       <head>
@@ -69,6 +70,7 @@ export default function RootLayout({
       >
         <Navbar />
         <CommandPalette />
+        <ScrollToTop />
         <main className="flex-grow">{children}</main>
       </body>
     </html>

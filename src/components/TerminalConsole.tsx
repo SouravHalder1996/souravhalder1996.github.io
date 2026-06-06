@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { Terminal } from "lucide-react";
 
 interface TerminalConsoleProps {
-  onComplete: () => void;
+  onComplete?: () => void;
 }
 
 const bootLines = [
@@ -21,8 +21,7 @@ const bootLines = [
 ];
 
 export default function TerminalConsole({ onComplete }: TerminalConsoleProps) {
-  const [lines, setLines] = useState<string[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [lines] = useState<string[]>(bootLines.map((l) => l.text));
   const [cursorVisible, setCursorVisible] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -34,23 +33,10 @@ export default function TerminalConsole({ onComplete }: TerminalConsoleProps) {
     return () => clearInterval(interval);
   }, []);
 
-  // Print line by line
+  // Notify parent immediately on mount if callback exists
   useEffect(() => {
-    if (currentIndex < bootLines.length) {
-      const { text, delay } = bootLines[currentIndex];
-      const timer = setTimeout(() => {
-        setLines((prev) => [...prev, text]);
-        setCurrentIndex((prev) => prev + 1);
-      }, delay);
-      return () => clearTimeout(timer);
-    } else {
-      // Finished boot sequence, notify parent
-      const finishTimer = setTimeout(() => {
-        onComplete();
-      }, 500);
-      return () => clearTimeout(finishTimer);
-    }
-  }, [currentIndex, onComplete]);
+    onComplete?.();
+  }, [onComplete]);
 
   // Auto scroll terminal
   useEffect(() => {
@@ -98,17 +84,14 @@ export default function TerminalConsole({ onComplete }: TerminalConsoleProps) {
             </div>
           );
         })}
-        {currentIndex < bootLines.length && (
-          <div className="inline-flex items-center">
-            <span className="text-primary font-semibold mr-1.5">&gt;</span>
-            <span className="text-muted-foreground animate-pulse">Running process...</span>
-            <span 
-              className={`inline-block w-1.5 h-3.5 ml-1 bg-primary ${
-                cursorVisible ? "opacity-100" : "opacity-0"
-              }`}
-            />
-          </div>
-        )}
+        <div className="inline-flex items-center">
+          <span className="text-primary font-semibold mr-1.5">sh sourav@dwh-orchestrator ~ %</span>
+          <span 
+            className={`inline-block w-1.5 h-3.5 bg-primary ${
+              cursorVisible ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        </div>
       </div>
     </div>
   );

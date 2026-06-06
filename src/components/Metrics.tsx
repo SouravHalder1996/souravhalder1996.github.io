@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import TerminalConsole from "./TerminalConsole";
 import CountUp from "./CountUp";
 import { Activity, ShieldAlert, Cpu, ArrowDownLeft } from "lucide-react";
 
 export default function Metrics() {
-  const [isBooted, setIsBooted] = useState(false);
-
   return (
     <section id="metrics" className="py-24 relative overflow-hidden bg-transparent">
       <div className="container max-w-7xl mx-auto px-6">
@@ -32,13 +29,14 @@ export default function Metrics() {
           
           {/* Console / Boot Terminal Card */}
           <div className="lg:col-span-2 h-full">
-            <TerminalConsole onComplete={() => setIsBooted(true)} />
+            <TerminalConsole />
           </div>
 
           {/* Metric 1 - Production ETL Pipelines */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={isBooted ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="border border-slate-200/80 dark:border-border/60 bg-white/80 dark:bg-card/40 backdrop-blur-md hover:border-primary/20 transition-all duration-300 rounded-xl p-6 flex flex-col justify-between min-h-[180px] group shadow-lg"
           >
@@ -49,8 +47,8 @@ export default function Metrics() {
               <Cpu className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
             </div>
             <div className="my-4">
-              <h3 className="text-5xl font-black text-foreground tracking-tight">
-                {isBooted ? <CountUp end={50} suffix="+" /> : "0"}
+              <h3 className="text-5xl font-black text-foreground tracking-tight font-sans">
+                <CountUp end={50} suffix="+" />
               </h3>
               <p className="text-sm font-semibold text-primary mt-1">ETL Pipelines</p>
             </div>
@@ -62,7 +60,8 @@ export default function Metrics() {
           {/* Metric 2 - Pipeline SLA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={isBooted ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="border border-slate-200/80 dark:border-border/60 bg-white/80 dark:bg-card/40 backdrop-blur-md hover:border-primary/20 transition-all duration-300 rounded-xl p-6 flex flex-col justify-between min-h-[180px] group shadow-lg"
           >
@@ -76,8 +75,8 @@ export default function Metrics() {
               </div>
             </div>
             <div className="my-4">
-              <h3 className="text-5xl font-black text-foreground tracking-tight">
-                {isBooted ? <CountUp end={99.5} decimals={1} suffix="%" /> : "0.0%"}
+              <h3 className="text-5xl font-black text-foreground tracking-tight font-sans">
+                <CountUp end={99.5} decimals={1} suffix="%" />
               </h3>
               <p className="text-sm font-semibold text-primary mt-1">Operational SLA</p>
             </div>
@@ -89,7 +88,8 @@ export default function Metrics() {
           {/* Metric 3 - Data Extraction Reduction */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={isBooted ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="border border-slate-200/80 dark:border-border/60 bg-white/80 dark:bg-card/40 backdrop-blur-md hover:border-primary/20 transition-all duration-300 rounded-xl p-6 flex flex-col justify-between min-h-[180px] group shadow-lg"
           >
@@ -100,8 +100,8 @@ export default function Metrics() {
               <ArrowDownLeft className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
             </div>
             <div className="my-4">
-              <h3 className="text-5xl font-black text-foreground tracking-tight">
-                {isBooted ? <CountUp end={93.75} decimals={2} suffix="%" /> : "0.00%"}
+              <h3 className="text-5xl font-black text-foreground tracking-tight font-sans">
+                <CountUp end={93.75} decimals={2} suffix="%" />
               </h3>
               <p className="text-sm font-semibold text-primary mt-1">Traffic Reduction</p>
             </div>
@@ -113,7 +113,8 @@ export default function Metrics() {
           {/* Metric 4 - ServiceNow MTTR Alerting */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={isBooted ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5, delay: 0.4 }}
             className="border border-slate-200/80 dark:border-border/60 bg-white/80 dark:bg-card/40 backdrop-blur-md hover:border-primary/20 transition-all duration-300 rounded-xl p-6 flex flex-col justify-between min-h-[180px] group shadow-lg"
           >
@@ -124,8 +125,8 @@ export default function Metrics() {
               <ShieldAlert className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
             </div>
             <div className="my-4">
-              <h3 className="text-5xl font-black text-foreground tracking-tight">
-                {isBooted ? <CountUp end={40} prefix="-" suffix="%" /> : "0%"}
+              <h3 className="text-5xl font-black text-foreground tracking-tight font-sans">
+                <CountUp end={40} prefix="-" suffix="%" />
               </h3>
               <p className="text-sm font-semibold text-primary mt-1">MTTR Improvement</p>
             </div>
@@ -133,6 +134,7 @@ export default function Metrics() {
               Automated integration linking pipeline alerts to ServiceNow API, replacing manual triaging and routing.
             </p>
           </motion.div>
+
 
         </div>
       </div>

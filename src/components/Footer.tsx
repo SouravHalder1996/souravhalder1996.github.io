@@ -30,12 +30,9 @@ export default function Footer() {
       <div className="container max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         
         {/* Left Side: Copyright */}
-        <div className="text-center md:text-left space-y-1">
+        <div className="text-center md:text-left">
           <p className="text-xs sm:text-sm text-muted-foreground">
             © {new Date().getFullYear()} Sourav Halder. All rights reserved.
-          </p>
-          <p className="text-[10px] font-mono text-muted-foreground/60">
-            Built with Next.js · Tailwind CSS · Framer Motion
           </p>
         </div>
 

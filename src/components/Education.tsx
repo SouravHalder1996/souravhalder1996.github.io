@@ -182,7 +182,7 @@ export default function Education() {
   };
 
   return (
-    <section id="education" className="py-24 relative overflow-hidden bg-background">
+    <section id="education" className="py-24 relative overflow-hidden bg-background scroll-mt-20">
       {/* Background radial accent */}
       <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-primary/2 rounded-full blur-3xl pointer-events-none -z-10" />
 
@@ -227,25 +227,6 @@ export default function Education() {
         .led-hdd { animation: ledBlinkFast 0.4s infinite; }
         .led-sys { animation: ledBlinkSlow 2s infinite; }
         .led-net { animation: ledBlinkMedium 0.8s infinite; }
-        
-        .vent-slats {
-          background: repeating-linear-gradient(
-            to bottom,
-            transparent,
-            transparent 4px,
-            rgba(0, 0, 0, 0.08) 4px,
-            rgba(0, 0, 0, 0.08) 8px
-          );
-        }
-        .dark .vent-slats {
-          background: repeating-linear-gradient(
-            to bottom,
-            transparent,
-            transparent 4px,
-            rgba(0, 0, 0, 0.35) 4px,
-            rgba(0, 0, 0, 0.35) 8px
-          );
-        }
         
         @keyframes waveScroll {
           0% {
@@ -313,8 +294,6 @@ export default function Education() {
               
               {/* Telemetry Dashboard Banner (Cabinet Status Info) */}
               <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-855 rounded-xl p-3 font-mono text-[9px] sm:text-xs text-slate-600 dark:text-slate-400 flex flex-wrap items-center justify-between gap-4 shadow-inner relative overflow-hidden select-none transition-colors duration-300">
-                {/* Scanline filter */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.03)_50%)] pointer-events-none bg-[size:100%_4px] transition-colors duration-300" />
                 
                 <div className="flex items-center gap-2 z-10">
                   <div className="relative flex h-2 w-2">
@@ -359,7 +338,7 @@ export default function Education() {
                     {/* Blade Chassis Header faceplate - Grid-aligned for vertical parallel spacing */}
                     <div
                       onClick={() => toggleBlade(blade.id)}
-                      className="flex flex-col md:grid md:grid-cols-12 md:items-center p-4 gap-4 cursor-pointer select-none font-mono relative vent-slats md:min-h-20 md:h-auto md:py-0"
+                      className="flex flex-col md:grid md:grid-cols-12 md:items-center p-4 gap-4 cursor-pointer select-none font-mono relative md:min-h-20 md:h-auto md:py-0"
                     >
                       {/* Left side Grab-Handle (chassis ear) */}
                       <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-slate-400 via-slate-300 to-slate-500 border-r border-slate-500 rounded-l hidden md:block" />
@@ -440,8 +419,6 @@ export default function Education() {
                       {/* Column 4: Retro LCD Grade display - fixed width to avoid text wrapping (col-span-3) */}
                       <div className="flex justify-center col-span-3 w-full z-10">
                         <div className="flex items-center justify-between w-36 sm:w-40 bg-black border border-slate-800 rounded px-2.5 py-1.5 relative shadow-inner flex-shrink-0 select-none overflow-hidden h-[34px]">
-                          {/* Scanlines layer */}
-                          <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] pointer-events-none bg-[size:100%_4px]" />
                           <span className="text-[7.5px] text-slate-400 font-bold uppercase tracking-wider select-none pr-1">
                             {blade.gradeLabel}:
                           </span>
@@ -566,8 +543,6 @@ export default function Education() {
                                 
                                 {/* Diagnostic log monitor */}
                                 <div className="p-4 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-900 rounded-xl relative shadow-inner overflow-hidden flex flex-col justify-between min-h-[170px]">
-                                  {/* CRT Scanline filter */}
-                                  <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.06)_50%)] pointer-events-none bg-[size:100%_3px]" />
                                   
                                   <div>
                                     <span className="text-[7px] text-emerald-655 dark:text-emerald-500 font-bold uppercase tracking-wider block mb-2 leading-none">
@@ -624,7 +599,7 @@ export default function Education() {
             </div>
 
             {/* Right Rack Mounting Rail */}
-            <div className="w-8 sm:w-10 flex-shrink-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 dark:from-slate-800 dark:via-slate-705 dark:to-slate-800 border-l border-slate-300 dark:border-slate-655 flex flex-col justify-around items-center py-6 select-none border-r border-slate-250 dark:border-slate-900 transition-all duration-300">
+            <div className="w-8 sm:w-10 flex-shrink-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 border-l border-slate-300 dark:border-slate-650 flex flex-col justify-around items-center py-6 select-none border-r border-slate-250 dark:border-slate-900 transition-all duration-300">
               {Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className="flex flex-col items-center gap-1.5">
                   <span className="text-[7px] font-mono text-slate-500 dark:text-slate-400 leading-none">U{4 - i}</span>

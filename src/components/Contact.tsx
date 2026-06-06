@@ -26,21 +26,60 @@ export default function Contact() {
     setTimeout(() => setCopiedType(null), 2000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
     
     setStatus("loading");
-    // Simulate sending message to backend
-    setTimeout(() => {
-      setStatus("success");
-      setForm({ name: "", email: "", message: "" });
+    
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+    
+    if (!accessKey || accessKey === "YOUR_ACCESS_KEY_HERE") {
+      // Fallback to simulation for previewing
+      console.warn("Web3Forms access key is not set. Simulating form submission.");
+      setTimeout(() => {
+        setStatus("success");
+        setForm({ name: "", email: "", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+      }, 1500);
+      return;
+    }
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          subject: `Portfolio Message from ${form.name}`,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setStatus("success");
+        setForm({ name: "", email: "", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        console.error("Web3Forms submission failed:", data);
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 5000);
+      }
+    } catch (err) {
+      console.error("Web3Forms connection error:", err);
+      setStatus("error");
       setTimeout(() => setStatus("idle"), 5000);
-    }, 1500);
+    }
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-background">
+    <section id="contact" className="py-24 relative overflow-hidden bg-background scroll-mt-20">
       {/* Background ambient accents */}
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none -z-10" />
 
@@ -61,86 +100,88 @@ export default function Contact() {
         </div>
 
         {/* Contact Layout Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl mx-auto items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full mx-auto">
           
           {/* Left Column: Info Card Ledger (col-span-5) */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-card/25 backdrop-blur-md rounded-2xl p-6 sm:p-8 space-y-8 shadow-xl shadow-slate-100/50 dark:shadow-none">
+          <div className="lg:col-span-5 flex flex-col">
+            <div className="w-full h-full border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-card/25 backdrop-blur-md rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-slate-100/50 dark:shadow-none gap-8">
               
-              <div className="space-y-1">
-                <span className="text-[10px] font-mono font-bold text-primary uppercase tracking-widest leading-none block">
-                  Communication Details
-                </span>
-                <h3 className="text-xl font-bold text-foreground font-heading">
-                  Contact Information
-                </h3>
-              </div>
-
-              {/* Ledger Items */}
-              <div className="space-y-6">
-                {/* Email */}
-                <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-250">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">Email</h4>
-                    <a href="mailto:halder.sourav1996@gmail.com" className="text-sm font-semibold text-foreground hover:text-primary hover:underline transition-colors truncate block">
-                      halder.sourav1996@gmail.com
-                    </a>
-                  </div>
-                  <button
-                    onClick={() => handleCopy("halder.sourav1996@gmail.com", "email")}
-                    className="p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-muted-foreground hover:text-foreground transition-colors"
-                    title="Copy Email"
-                  >
-                    {copiedType === "email" ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
-                  </button>
+              <div className="space-y-8">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-mono font-bold text-primary uppercase tracking-widest leading-none block">
+                    Communication Details
+                  </span>
+                  <h3 className="text-xl font-bold text-foreground font-heading">
+                    Contact Information
+                  </h3>
                 </div>
 
-                {/* Phone */}
-                <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-250">
-                    <Phone className="w-5 h-5" />
+                {/* Ledger Items */}
+                <div className="space-y-6">
+                  {/* Email */}
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-250">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">Email</h4>
+                      <a href="mailto:halder.sourav1996@gmail.com" className="text-sm font-semibold text-foreground hover:text-primary hover:underline transition-colors truncate block">
+                        halder.sourav1996@gmail.com
+                      </a>
+                    </div>
+                    <button
+                      onClick={() => handleCopy("halder.sourav1996@gmail.com", "email")}
+                      className="p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-muted-foreground hover:text-foreground transition-colors"
+                      title="Copy Email"
+                    >
+                      {copiedType === "email" ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                    </button>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">Phone</h4>
-                    <a href="tel:+918777893442" className="text-sm font-semibold text-foreground hover:text-primary hover:underline transition-colors truncate block">
-                      (+91) 8777893442
-                    </a>
-                  </div>
-                  <button
-                    onClick={() => handleCopy("+918777893442", "phone")}
-                    className="p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-muted-foreground hover:text-foreground transition-colors"
-                    title="Copy Phone Number"
-                  >
-                    {copiedType === "phone" ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
-                  </button>
-                </div>
 
-                {/* Location */}
-                <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-250">
-                    <MapPin className="w-5 h-5" />
+                  {/* Phone */}
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-250">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">Phone</h4>
+                      <a href="tel:+918777893442" className="text-sm font-semibold text-foreground hover:text-primary hover:underline transition-colors truncate block">
+                        (+91) 8777893442
+                      </a>
+                    </div>
+                    <button
+                      onClick={() => handleCopy("+918777893442", "phone")}
+                      className="p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-muted-foreground hover:text-foreground transition-colors"
+                      title="Copy Phone Number"
+                    >
+                      {copiedType === "phone" ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                    </button>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">Location</h4>
-                    <span className="text-sm font-semibold text-foreground truncate block">
-                      Kolkata, West Bengal, India
-                    </span>
-                  </div>
-                </div>
 
-                {/* Birthday */}
-                <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-250">
-                    <Calendar className="w-5 h-5" />
+                  {/* Location */}
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-250">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">Location</h4>
+                      <span className="text-sm font-semibold text-foreground truncate block">
+                        Kolkata, West Bengal, India
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">Birthday</h4>
-                    <span className="text-sm font-semibold text-foreground truncate block">
-                      July 17, 1996
-                    </span>
+
+                  {/* Birthday */}
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-250">
+                      <Calendar className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">Birthday</h4>
+                      <span className="text-sm font-semibold text-foreground truncate block">
+                        July 17, 1996
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -181,105 +222,117 @@ export default function Contact() {
           </div>
 
           {/* Right Column: Contact Form (col-span-7) */}
-          <div className="lg:col-span-7">
-            <div className="border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-card/25 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-xl shadow-slate-100/50 dark:shadow-none">
+          <div className="lg:col-span-7 flex flex-col">
+            <div className="w-full h-full border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-card/25 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col justify-between gap-8">
               
-              <div className="space-y-1 mb-8">
-                <span className="text-[10px] font-mono font-bold text-primary uppercase tracking-widest leading-none block">
-                  Interactive Terminal
-                </span>
-                <h3 className="text-xl font-bold text-foreground font-heading">
-                  Send A Message
-                </h3>
-              </div>
-
-              {status === "success" ? (
-                <div className="py-12 flex flex-col items-center text-center space-y-4 animate-in fade-in duration-300">
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 flex items-center justify-center">
-                    <Check className="w-8 h-8" />
-                  </div>
-                  <div className="space-y-1">
-                    <h4 className="font-bold text-foreground text-lg">Message Sent Successfully</h4>
-                    <p className="text-sm text-muted-foreground max-w-xs">
-                      Thank you! Your message has been dispatched. I'll get back to you shortly.
-                    </p>
-                  </div>
+              <div className="space-y-8 flex-1 flex flex-col">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-mono font-bold text-primary uppercase tracking-widest leading-none block">
+                    Interactive Terminal
+                  </span>
+                  <h3 className="text-xl font-bold text-foreground font-heading">
+                    Send A Message
+                  </h3>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {/* Name */}
-                    <div className="space-y-2">
-                      <label htmlFor="name" className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">
-                        Full Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        required
-                        placeholder="John Doe"
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        disabled={status === "loading"}
-                        className="w-full text-sm px-4 py-3 rounded-xl border border-border bg-white dark:bg-slate-900/40 text-foreground placeholder-muted-foreground/60 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200 disabled:opacity-50"
-                      />
-                    </div>
 
-                    {/* Email */}
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">
-                        Email Address
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        required
-                        placeholder="john@example.com"
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        disabled={status === "loading"}
-                        className="w-full text-sm px-4 py-3 rounded-xl border border-border bg-white dark:bg-slate-900/40 text-foreground placeholder-muted-foreground/60 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200 disabled:opacity-50"
-                      />
+                {status === "success" ? (
+                  <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4 animate-in fade-in duration-300 py-12">
+                    <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 flex items-center justify-center">
+                      <Check className="w-8 h-8" />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="font-bold text-foreground text-lg">Message Sent Successfully</h4>
+                      <p className="text-sm text-muted-foreground max-w-xs">
+                        Thank you! Your message has been dispatched. I'll get back to you shortly.
+                      </p>
                     </div>
                   </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="flex-1 flex flex-col justify-between gap-6">
+                    <div className="space-y-6 flex-1">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {/* Name */}
+                        <div className="space-y-2">
+                          <label htmlFor="name" className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">
+                            Full Name
+                          </label>
+                          <input
+                            type="text"
+                            id="name"
+                            required
+                            placeholder="John Doe"
+                            value={form.name}
+                            onChange={(e) => setForm({ ...form, name: e.target.value })}
+                            disabled={status === "loading"}
+                            className="w-full text-sm px-4 py-3 rounded-xl border border-border bg-white dark:bg-slate-900/40 text-foreground placeholder-muted-foreground/60 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200 disabled:opacity-50"
+                          />
+                        </div>
 
-                  {/* Message */}
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      required
-                      rows={5}
-                      placeholder="Tell me about your project or opportunity..."
-                      value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      disabled={status === "loading"}
-                      className="w-full text-sm px-4 py-3 rounded-xl border border-border bg-white dark:bg-slate-900/40 text-foreground placeholder-muted-foreground/60 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200 resize-none disabled:opacity-50"
-                    />
-                  </div>
+                        {/* Email */}
+                        <div className="space-y-2">
+                          <label htmlFor="email" className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">
+                            Email Address
+                          </label>
+                          <input
+                            type="email"
+                            id="email"
+                            required
+                            placeholder="john@example.com"
+                            value={form.email}
+                            onChange={(e) => setForm({ ...form, email: e.target.value })}
+                            disabled={status === "loading"}
+                            className="w-full text-sm px-4 py-3 rounded-xl border border-border bg-white dark:bg-slate-900/40 text-foreground placeholder-muted-foreground/60 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200 disabled:opacity-50"
+                          />
+                        </div>
+                      </div>
 
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={status === "loading" || !form.name || !form.email || !form.message}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-mono text-sm font-bold hover:bg-primary/95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow"
-                  >
-                    {status === "loading" ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                        <span>Sending Transmission...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        <span>Send Message</span>
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
+                      {/* Message */}
+                      <div className="space-y-2">
+                        <label htmlFor="message" className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">
+                          Message
+                        </label>
+                        <textarea
+                          id="message"
+                          required
+                          rows={5}
+                          placeholder="Tell me about your project or opportunity..."
+                          value={form.message}
+                          onChange={(e) => setForm({ ...form, message: e.target.value })}
+                          disabled={status === "loading"}
+                          className="w-full text-sm px-4 py-3 rounded-xl border border-border bg-white dark:bg-slate-900/40 text-foreground placeholder-muted-foreground/60 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200 resize-none disabled:opacity-50"
+                        />
+                      </div>
+
+                      {status === "error" && (
+                        <p className="text-xs text-rose-500 font-mono">
+                          Transmission failed. Please check your connection and try again.
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="pt-2">
+                      <button
+                        type="submit"
+                        disabled={status === "loading" || !form.name || !form.email || !form.message}
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-mono text-sm font-bold hover:bg-primary/95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow"
+                      >
+                        {status === "loading" ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                            <span>Sending Transmission...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-4 h-4" />
+                            <span>Send Message</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
 
             </div>
           </div>

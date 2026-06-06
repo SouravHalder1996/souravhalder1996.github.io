@@ -153,7 +153,7 @@ export default function Credentials() {
   };
 
   return (
-    <section id="credentials" className="py-24 relative overflow-hidden bg-background">
+    <section id="credentials" className="py-24 relative overflow-hidden bg-background scroll-mt-20">
       {/* Background ambient accents */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none -z-10" />
 

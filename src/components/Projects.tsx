@@ -1,18 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
 import {
   Workflow,
   ArrowRight,
   ArrowLeft,
-  X,
-  TrendingUp,
-  Layers,
-  Cpu,
-  AlertCircle,
   PlayCircle,
-  Server,
+  AlertCircle,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -278,16 +272,38 @@ const Github = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const toggleProject = (id: string) => {
-    setActiveProjectId(activeProjectId === id ? null : id);
+  // Filter projects dynamically
+  const filteredProjects = selectedCategory === "all"
+    ? projects
+    : projects.filter(p => p.categories.includes(selectedCategory));
+
+  const checkScrollLimits = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 1);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
+    }
   };
+
+  useEffect(() => {
+    // Wait a brief moment for DOM layout updates
+    const timer = setTimeout(() => {
+      checkScrollLimits();
+    }, 100);
+
+    window.addEventListener("resize", checkScrollLimits);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", checkScrollLimits);
+    };
+  }, [selectedCategory, filteredProjects]);
 
   const selectCategoryHandler = (catId: string) => {
     setSelectedCategory(catId);
-    setActiveProjectId(null); // Close active case study when switching categories
   };
 
   // Horizontal Carousel scroll logic
@@ -302,15 +318,8 @@ export default function Projects() {
     }
   };
 
-  // Filter projects dynamically
-  const filteredProjects = selectedCategory === "all"
-    ? projects
-    : projects.filter(p => p.categories.includes(selectedCategory));
-
-  const activeProjectData = projects.find(p => p.id === activeProjectId);
-
   return (
-    <section id="projects" className="py-24 relative overflow-hidden bg-background">
+    <section id="projects" className="py-24 relative overflow-hidden bg-background scroll-mt-20">
       {/* Version safe CSS rule for hiding webkit scrollbars locally */}
       <style>{`
         .no-scrollbar::-webkit-scrollbar {
@@ -343,15 +352,17 @@ export default function Projects() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => handleScroll("left")}
+                disabled={!canScrollLeft}
                 aria-label="Scroll left"
-                className="w-10 h-10 rounded-lg border border-border bg-card/45 hover:bg-muted/40 text-foreground flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
+                className="w-10 h-10 rounded-lg border border-border bg-card/45 hover:bg-muted/40 text-foreground flex items-center justify-center transition-colors active:scale-95 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none"
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleScroll("right")}
+                disabled={!canScrollRight}
                 aria-label="Scroll right"
-                className="w-10 h-10 rounded-lg border border-border bg-card/45 hover:bg-muted/40 text-foreground flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
+                className="w-10 h-10 rounded-lg border border-border bg-card/45 hover:bg-muted/40 text-foreground flex items-center justify-center transition-colors active:scale-95 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none"
               >
                 <ArrowRight className="w-4 h-4" />
               </button>
@@ -380,6 +391,7 @@ export default function Projects() {
         <div className="relative">
           <div
             ref={scrollRef}
+            onScroll={checkScrollLimits}
             className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory scroll-smooth no-scrollbar"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
@@ -392,11 +404,7 @@ export default function Projects() {
               filteredProjects.map((project) => (
                 <div
                   key={project.id}
-                  className={`w-[290px] sm:w-[360px] flex-shrink-0 snap-start border rounded-xl overflow-hidden bg-white/80 dark:bg-card/30 backdrop-blur-md transition-all duration-300 relative flex flex-col justify-between shadow-lg ${
-                    activeProjectId === project.id
-                      ? "border-primary ring-1 ring-primary/20 bg-white/95 dark:bg-card/40"
-                      : "border-slate-200/80 dark:border-border/60 hover:border-primary/30 hover:-translate-y-1"
-                  }`}
+                  className="w-[290px] sm:w-[360px] flex-shrink-0 snap-start border rounded-xl overflow-hidden bg-white/80 dark:bg-card/30 backdrop-blur-md transition-all duration-300 relative flex flex-col justify-between shadow-lg border-slate-200/80 dark:border-border/60 hover:border-primary/30 hover:-translate-y-1"
                 >
                   <div>
                     {/* Top Image Banner */}
@@ -462,30 +470,16 @@ export default function Projects() {
                       )}
                     </div>
 
-                    <div className="pt-3 border-t border-border/20 flex items-center justify-between">
-                      <button
-                        onClick={() => toggleProject(project.id)}
-                        className={`inline-flex items-center gap-1.5 text-xs font-mono font-semibold transition-colors cursor-pointer ${
-                          activeProjectId === project.id
-                            ? "text-primary-foreground bg-primary px-2.5 py-1 rounded"
-                            : "text-primary hover:text-primary/80"
-                        }`}
+                    <div className="pt-3 border-t border-border/20 flex items-center justify-center">
+                      <a
+                        href={project.github || "https://github.com/SouravHalder1996"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                       >
-                        <span>{activeProjectId === project.id ? "Close Case" : "View Case Study"}</span>
-                        <ArrowRight className={`w-3 h-3 transition-transform ${activeProjectId === project.id ? "rotate-90" : ""}`} />
-                      </button>
-
-                      {project.github && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-[9px] font-mono text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                          <Github className="w-3.5 h-3.5" />
-                          <span>Code</span>
-                        </a>
-                      )}
+                        <Github className="w-3.5 h-3.5" />
+                        <span>View in GitHub</span>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -494,140 +488,7 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* Full-width Expanding Case Study Dashboard below the track */}
-        <AnimatePresence>
-          {activeProjectId && activeProjectData && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="border border-slate-200/80 dark:border-border/60 bg-white/80 dark:bg-card/25 backdrop-blur-md rounded-xl overflow-hidden shadow-lg mt-8"
-            >
-              <div className="p-6 sm:p-8 lg:p-10">
-                
-                {/* Header info */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-200/50 dark:border-border/20">
-                  <div>
-                    <span className="text-[10px] font-mono text-primary uppercase tracking-wider">
-                      Technical Deep Dive
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground font-heading">
-                      {activeProjectData.title}
-                    </h3>
-                  </div>
 
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-lg">
-                      <span className="text-xl font-black text-primary font-heading leading-none">
-                        {activeProjectData.metric}
-                      </span>
-                      <span className="text-[10px] font-mono text-muted-foreground leading-none">
-                        {activeProjectData.metricLabel}
-                      </span>
-                    </div>
-
-                    <button
-                      onClick={() => setActiveProjectId(null)}
-                      aria-label="Close details"
-                      className="w-8 h-8 rounded-lg border border-border hover:bg-muted/40 flex items-center justify-center text-foreground transition-colors cursor-pointer"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Dashboard Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                  {/* Left Column: Problem & Approach */}
-                  <div className="lg:col-span-6 space-y-6">
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <AlertCircle className="w-4 h-4 text-rose-500" />
-                        <span className="text-xs font-mono font-bold text-rose-400 tracking-wider uppercase">Problem Statement</span>
-                      </div>
-                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed pl-6 border-l border-rose-500/20">
-                        {activeProjectData.details.problem}
-                      </p>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Layers className="w-4 h-4 text-cyan-400" />
-                        <span className="text-xs font-mono font-bold text-cyan-400 tracking-wider uppercase">Proposed Approach</span>
-                      </div>
-                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed pl-6 border-l border-cyan-400/20">
-                        {activeProjectData.details.approach}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Right Column: Ingestion Flow & outcomes */}
-                  <div className="lg:col-span-6 space-y-6">
-                    <div>
-                      <div className="flex items-center gap-2 mb-3">
-                        <Cpu className="w-4 h-4 text-primary" />
-                        <span className="text-xs font-mono font-bold text-primary tracking-wider uppercase">System Architecture Flow</span>
-                      </div>
-                      
-                      <div className="bg-slate-950/80 rounded-lg p-4 border border-border/40 font-mono text-[10px] sm:text-xs text-muted-foreground overflow-x-auto space-y-2">
-                        {activeProjectData.details.architectureFlow.map((node, nodeIdx) => (
-                          <div key={node} className="flex flex-col items-start gap-1">
-                            <div className="flex items-center gap-2 py-1 px-2.5 rounded bg-muted/30 text-foreground border border-border/20">
-                              <span className="text-primary/70">{nodeIdx + 1}.</span> {node}
-                            </div>
-                            {nodeIdx < activeProjectData.details.architectureFlow.length - 1 && (
-                              <div className="pl-6 py-0.5 text-primary/40 font-bold select-none text-[8px] sm:text-[10px]">
-                                │<br/>▼
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <TrendingUp className="w-4 h-4 text-emerald-400" />
-                        <span className="text-xs font-mono font-bold text-emerald-400 tracking-wider uppercase">Business & Technical Outcomes</span>
-                      </div>
-                      <ul className="space-y-2 pl-6 border-l border-emerald-400/20">
-                        {activeProjectData.details.outcomes.map((outcome, idx) => (
-                          <li key={idx} className="text-xs sm:text-sm text-muted-foreground flex items-start gap-2">
-                            <span className="text-emerald-400 font-bold font-mono mt-0.5">•</span>
-                            <span>{outcome}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Bottom Action Row */}
-                <div className="flex justify-end mt-8 pt-6 border-t border-border/20 gap-4">
-                  {activeProjectData.github && (
-                    <a
-                      href={activeProjectData.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border bg-card/25 hover:bg-muted/40 text-xs font-mono transition-colors"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>Source Code</span>
-                    </a>
-                  )}
-                  <button
-                    onClick={() => setActiveProjectId(null)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-mono font-semibold transition-all cursor-pointer"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                    <span>Close Case Study</span>
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </section>
   );
