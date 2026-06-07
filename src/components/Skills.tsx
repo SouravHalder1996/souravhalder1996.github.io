@@ -291,8 +291,8 @@ export default function Skills() {
               </div>
 
               {/* Editor Workspace */}
-              <div className="flex-grow overflow-y-auto bg-white dark:bg-[#1e1e1e] transition-colors duration-300">
-                <div className="flex min-h-full bg-white dark:bg-[#1e1e1e]">
+              <div className="flex-grow overflow-auto bg-white dark:bg-[#1e1e1e] transition-colors duration-300">
+                <div className="flex min-h-full bg-white dark:bg-[#1e1e1e] w-full min-w-max">
                   {/* Line numbers gutter */}
                   <div className="hidden sm:flex flex-col items-end py-4 px-3.5 text-[11px] text-[#a6a6a6] dark:text-[#858585] select-none border-r border-slate-200 dark:border-[#2d2d2d] bg-white dark:bg-[#1e1e1e] flex-shrink-0 transition-colors duration-300">
                     {Array.from({ length: lineCount }, (_, i) => (
@@ -305,7 +305,7 @@ export default function Skills() {
                   {/* Code Container */}
                   <div className="flex-1 py-4 px-6 font-mono text-xs select-none">
                     {/* Section Comment */}
-                    <div className="h-7 leading-7 text-[#008000] dark:text-[#6a9955] italic transition-colors">
+                    <div className="h-7 leading-7 text-[#008000] dark:text-[#6a9955] italic transition-colors whitespace-nowrap">
                       {activeFile.comment}
                     </div>
                     
@@ -317,12 +317,12 @@ export default function Skills() {
                       {activeFile.id === "ds" && activeFile.groups.map((group, gIdx) => (
                         <div key={group.groupName} className="space-y-4">
                           {/* Jupyter cell prompt */}
-                          <div className="h-7 leading-7 flex items-center gap-2 select-none">
+                          <div className="h-7 leading-7 flex items-center gap-2 select-none whitespace-nowrap">
                             <span className="text-blue-500 font-bold">In [{gIdx + 1}]:</span>
                             <span className="text-[#008000] dark:text-[#6a9955] italic"># {group.groupName}</span>
                           </div>
                           {/* Python class declaration */}
-                          <div className="h-7 leading-7 flex items-center gap-2 pl-4">
+                          <div className="h-7 leading-7 flex items-center gap-2 pl-4 whitespace-nowrap">
                             <span className="text-[#0000ff] dark:text-[#569cd6] font-bold transition-colors">class</span>
                             <span className="text-[#267f99] dark:text-[#4ec9b0] transition-colors">{group.groupName.replace(/[^a-zA-Z0-9]/g, "")}:</span>
                           </div>
@@ -356,11 +356,11 @@ export default function Skills() {
                       {activeFile.id === "cloud" && activeFile.groups.map((group) => (
                         <div key={group.groupName} className="space-y-4">
                           {/* YAML group key */}
-                          <div className="h-7 leading-7 flex items-center select-none">
+                          <div className="h-7 leading-7 flex items-center select-none whitespace-nowrap">
                             <span className="text-[#0451a5] dark:text-[#9cdcfe] font-semibold">{group.groupName.toLowerCase().replace(/[^a-z0-9]/g, "_")}:</span>
                           </div>
                           {/* YAML Nested list key */}
-                          <div className="h-7 leading-7 flex items-center pl-4 select-none">
+                          <div className="h-7 leading-7 flex items-center pl-4 select-none whitespace-nowrap">
                             <span className="text-[#0451a5] dark:text-[#9cdcfe] font-semibold">skills:</span>
                           </div>
 
@@ -395,11 +395,11 @@ export default function Skills() {
                       {activeFile.id === "lang" && activeFile.groups.map((group) => (
                         <div key={group.groupName} className="space-y-4">
                           {/* Python comment */}
-                          <div className="h-7 leading-7 text-[#008000] dark:text-[#6a9955] italic select-none">
+                          <div className="h-7 leading-7 text-[#008000] dark:text-[#6a9955] italic select-none whitespace-nowrap">
                             # {group.groupName}
                           </div>
                           {/* Python class declaration */}
-                          <div className="h-7 leading-7 flex items-center gap-2 pl-4">
+                          <div className="h-7 leading-7 flex items-center gap-2 pl-4 whitespace-nowrap">
                             <span className="text-[#0000ff] dark:text-[#569cd6] font-bold transition-colors">class</span>
                             <span className="text-[#267f99] dark:text-[#4ec9b0] transition-colors">{group.groupName.replace(/[^a-zA-Z0-9]/g, "")}:</span>
                           </div>

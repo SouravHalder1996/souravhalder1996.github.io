@@ -54,8 +54,10 @@ export default function FlipWords({
           opacity: 0,
           y: -10,
           position: "absolute",
+          width: "max-content",
+          whiteSpace: "nowrap",
         }}
-        className={`inline-block relative text-left ${className}`}
+        className={`inline-block relative text-left w-full ${className}`}
         key={currentWord}
       >
         {currentWord.split(" ").map((word, wordIndex) => (

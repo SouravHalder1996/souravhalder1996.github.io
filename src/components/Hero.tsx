@@ -69,10 +69,10 @@ export default function Hero() {
           </h1>
 
           {/* Rotating Role Text */}
-          <div className="h-20 sm:h-16 flex items-center">
+          <div className="h-20 sm:h-16 flex items-center w-full">
             <FlipWords 
               words={words} 
-              className="text-xl sm:text-3xl text-muted-foreground font-medium"
+              className="text-lg sm:text-2xl md:text-3xl text-muted-foreground font-medium"
               duration={3000}
             />
           </div>

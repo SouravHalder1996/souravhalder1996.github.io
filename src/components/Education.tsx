@@ -406,31 +406,34 @@ export default function Education() {
                         </div>
                       </div>
 
-                      {/* Column 2: Ethernet Port (col-span-1) */}
-                      <div className="flex justify-center col-span-1 w-full z-10">
-                        <EthernetPort />
-                      </div>
-
-                      {/* Column 3: Cooling Fan (col-span-1) */}
-                      <div className="flex justify-center col-span-1 w-full z-10">
-                        <CoolingFan active={isOpen} />
-                      </div>
-
-                      {/* Column 4: Retro LCD Grade display - fixed width to avoid text wrapping (col-span-3) */}
-                      <div className="flex justify-center col-span-3 w-full z-10">
-                        <div className="flex items-center justify-between w-36 sm:w-40 bg-black border border-slate-800 rounded px-2.5 py-1.5 relative shadow-inner flex-shrink-0 select-none overflow-hidden h-[34px]">
-                          <span className="text-[7.5px] text-slate-400 font-bold uppercase tracking-wider select-none pr-1">
-                            {blade.gradeLabel}:
-                          </span>
-                          <span className={`text-[11px] sm:text-xs font-black tracking-widest leading-none whitespace-nowrap ${blade.gradeColor}`}>
-                            [ {blade.grade} ]
-                          </span>
+                      {/* Hardware faceplate controls grouped on mobile, expanded via md:contents on desktop */}
+                      <div className="flex flex-row flex-wrap items-center justify-between gap-3 w-full md:contents border-t border-dashed border-slate-200/60 dark:border-slate-800/40 pt-4 md:pt-0 md:border-none">
+                        {/* Column 2: Ethernet Port (col-span-1) */}
+                        <div className="flex justify-center md:col-span-1 z-10">
+                          <EthernetPort />
                         </div>
-                      </div>
 
-                      {/* Column 5: Chevron Arrow (col-span-1) */}
-                      <div className="flex justify-center md:justify-end col-span-1 w-full z-10 pr-2">
-                        <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-300 ${isOpen ? "rotate-180 text-primary" : ""}`} />
+                        {/* Column 3: Cooling Fan (col-span-1) */}
+                        <div className="flex justify-center md:col-span-1 z-10">
+                          <CoolingFan active={isOpen} />
+                        </div>
+
+                        {/* Column 4: Retro LCD Grade display - fixed width to avoid text wrapping (col-span-3) */}
+                        <div className="flex justify-center md:col-span-3 z-10">
+                          <div className="flex items-center justify-between w-32 sm:w-36 bg-black border border-slate-800 rounded px-2.5 py-1.5 relative shadow-inner flex-shrink-0 select-none overflow-hidden h-[34px]">
+                            <span className="text-[7px] text-slate-400 font-bold uppercase tracking-wider select-none pr-1">
+                              {blade.gradeLabel}:
+                            </span>
+                            <span className={`text-[10px] sm:text-xs font-black tracking-widest leading-none whitespace-nowrap ${blade.gradeColor}`}>
+                              [ {blade.grade} ]
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Column 5: Chevron Arrow (col-span-1) */}
+                        <div className="flex justify-center md:col-span-1 md:justify-end z-10 pr-2">
+                          <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-300 ${isOpen ? "rotate-180 text-primary" : ""}`} />
+                        </div>
                       </div>
 
                       {/* Right side Grab-Handle (chassis ear) */}
