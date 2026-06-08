@@ -16,6 +16,15 @@ interface Certificate {
 
 const allCerts: Certificate[] = [
   {
+    id: "db-mla",
+    title: "Databricks Certified Machine Learning Engineer Associate",
+    issuer: "Databricks",
+    date: "June 5, 2026",
+    description: "Validates the ability to leverage the Databricks platform and its ML capabilities—such as AutoML, Unity Catalog, and MLflow—to execute data exploration, feature engineering, model training, tuning, evaluation, and lifecycle deployment.",
+    verifyLink: "https://credentials.databricks.com/0072a61b-ccc9-430e-bf9f-cbefb1fe0244",
+    image: "/images/certifications/db-mla.png"
+  },
+  {
     id: "db-dep",
     title: "Databricks Certified Data Engineer Professional",
     issuer: "Databricks",
