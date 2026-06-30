@@ -113,7 +113,7 @@ export default function Hero() {
               </a>
 
               <a
-                href="/Sourav_Halder_v5.pdf"
+                href="/Sourav_Halder_Resume.pdf"
                 download="Sourav_Halder_Resume.pdf"
                 className="w-11 h-11 rounded-lg bg-card/40 hover:bg-accent hover:text-primary border border-border flex items-center justify-center text-muted-foreground hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
                 title="Download Resume"

@@ -71,7 +71,7 @@ export default function CommandPalette() {
     { id: "act-copy-phone", name: "Copy Phone Number", category: "Actions", icon: <Copy className="w-4 h-4" />, action: () => handleCopy("+918777893442", "Phone copied!") },
     { id: "act-download-cv", name: "Download Resume PDF", category: "Actions", icon: <Download className="w-4 h-4" />, action: () => {
       const link = document.createElement("a");
-      link.href = "/Sourav_Halder_v5.pdf";
+      link.href = "/Sourav_Halder_Resume.pdf";
       link.download = "Sourav_Halder_Resume.pdf";
       link.click();
     }},

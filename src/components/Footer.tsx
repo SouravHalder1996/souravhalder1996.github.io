@@ -59,7 +59,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="/Sourav_Halder_v5.pdf"
+            href="/Sourav_Halder_Resume.pdf"
             download="Sourav_Halder_Resume.pdf"
             className="w-8 h-8 rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-all duration-200"
             title="Download CV"

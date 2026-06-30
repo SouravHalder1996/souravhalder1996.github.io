@@ -209,7 +209,7 @@ export default function Contact() {
                 </a>
 
                 <a
-                  href="/Sourav_Halder_v5.pdf"
+                  href="/Sourav_Halder_Resume.pdf"
                   download="Sourav_Halder_Resume.pdf"
                   className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-mono font-bold transition-all duration-200 shadow-sm hover:shadow"
                 >
