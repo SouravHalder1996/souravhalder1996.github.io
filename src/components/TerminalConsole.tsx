@@ -8,16 +8,15 @@ interface TerminalConsoleProps {
 }
 
 const bootLines = [
-  { text: "sh sourav@dwh-orchestrator ~ % ./check_pipelines.sh", delay: 200 },
-  { text: ">>> Loading connection parameters SAP_ERP...", delay: 600 },
-  { text: ">>> Syncing Delta lake layers (Apache Iceberg)...", delay: 600 },
-  { text: ">>> Status: 93.75% extraction traffic reduction [OK]", delay: 500 },
-  { text: ">>> Validating Redshift clusters (14 active marts)...", delay: 500 },
-  { text: ">>> Checking ServiceNow MTTR integration...", delay: 600 },
-  { text: ">>> Status: MTTR reduced by 40% [OK]", delay: 400 },
-  { text: ">>> EventBridge & AWS Lambda active. SLA: 99.5%", delay: 500 },
+  { text: "sh sourav@ai-cloud-mesh ~ % ./system_telemetry.sh", delay: 200 },
+  { text: ">>> Initializing AWS Cloud Architecture (Multi-AZ ECS & Lambda)... [OK]", delay: 500 },
+  { text: ">>> Loading AWS Bedrock RAG Knowledge Bases... [OK]", delay: 500 },
+  { text: ">>> Connecting n8n AI Automation Webhook Engine...", delay: 500 },
+  { text: ">>> Spawning LangGraph Multi-Agent Orchestrator & Portkey AI Gateway...", delay: 600 },
+  { text: ">>> Validating ML Anomaly Detection Pipeline... [OK]", delay: 500 },
+  { text: ">>> Telemetry Status: 99.5% SLA · Sub-second latency · Zero failover", delay: 400 },
   { text: "--------------------------------------------------", delay: 300 },
-  { text: "SYSTEM STATUS: SECURE & STABLE. METRICS SYNCED.", delay: 400 },
+  { text: "SYSTEM STATUS: SECURE & STABLE. AI AGENT MESH ACTIVE.", delay: 400 },
 ];
 
 export default function TerminalConsole({ onComplete }: TerminalConsoleProps) {

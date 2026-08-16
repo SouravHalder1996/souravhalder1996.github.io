@@ -111,13 +111,13 @@
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 }
 
 @keyframes marquee-reverse {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
   100% {
     transform: translateX(0%);
@@ -128,15 +128,26 @@
   display: flex;
   width: max-content;
   animation: marquee 35s linear infinite;
+  will-change: transform;
 }
 
 .animate-marquee-reverse {
   display: flex;
   width: max-content;
   animation: marquee-reverse 35s linear infinite;
+  will-change: transform;
 }
 
 .marquee-container:hover .animate-marquee,
 .marquee-container:hover .animate-marquee-reverse {
-  animation-play-state: paused;
+  animation-play-state: paused !important;
+}
+
+/* Reusable utility to hide scrollbars while preserving scroll functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

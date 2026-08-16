@@ -1,11 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
-import GridBackground from "./GridBackground";
+import React, { useState, useEffect } from "react";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import NeuralBackground from "./NeuralBackground";
 import FlipWords from "./FlipWords";
 import ShinyButton from "./ShinyButton";
 import Image from "next/image";
-import { FileText } from "lucide-react";
+import { FileText, Bot, Sparkles, ArrowRight, ImageIcon } from "lucide-react";
 
 const Github = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -27,112 +28,218 @@ const orbitCards = [
   { icon: "/images/icons/api.png", alt: "API Development", angle: 198 },
 ];
 
+function OrbitCard({ card, index }: { card: typeof orbitCards[0]; index: number }) {
+  const [hasError, setHasError] = useState(false);
+  const [radius, setRadius] = useState(215);
+
+  useEffect(() => {
+    const updateRadius = () => {
+      if (typeof window !== "undefined") {
+        if (window.innerWidth < 480) {
+          setRadius(125);
+        } else if (window.innerWidth < 768) {
+          setRadius(155);
+        } else if (window.innerWidth < 1024) {
+          setRadius(175);
+        } else {
+          setRadius(215);
+        }
+      }
+    };
+    updateRadius();
+    window.addEventListener("resize", updateRadius);
+    return () => window.removeEventListener("resize", updateRadius);
+  }, []);
+
+  const rad = (card.angle * Math.PI) / 180;
+  const x = Math.cos(rad) * radius;
+  const y = Math.sin(rad) * radius;
+
+  return (
+    <motion.div
+      key={card.alt}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1, y: [0, -6, 0] }}
+      transition={{
+        opacity: { delay: 0.4 + index * 0.1, type: "spring", stiffness: 150 },
+        scale: { delay: 0.4 + index * 0.1, type: "spring", stiffness: 150 },
+        y: {
+          repeat: Infinity,
+          duration: 3 + index * 0.5,
+          ease: "easeInOut",
+          delay: index * 0.3,
+        },
+      }}
+      style={{
+        position: "absolute",
+        left: `calc(50% + ${x}px)`,
+        top: `calc(50% + ${y}px)`,
+        transform: "translate(-50%, -50%)",
+      }}
+      className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl border border-border/80 bg-card/85 backdrop-blur-md shadow-md flex items-center justify-center p-2 sm:p-2.5 lg:p-3 hover:border-primary/60 hover:scale-110 transition-all cursor-pointer"
+      title={card.alt}
+    >
+      <div className="relative w-full h-full flex items-center justify-center">
+        {!hasError ? (
+          <Image
+            src={card.icon}
+            alt={card.alt}
+            fill
+            loading="lazy"
+            className="object-contain"
+            onError={() => setHasError(true)}
+          />
+        ) : (
+          <ImageIcon className="w-5 h-5 text-muted-foreground/40" />
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Hero() {
   const words = [
-    "I architect scalable cloud solutions.",
-    "I build robust data pipelines.",
-    "I train machine learning models.",
+    "I build Agentic AI & n8n automations.",
+    "I train Machine Learning models.",
+    "I build RAG-based chatbots.",
+    "I architect scalable cloud infrastructure.",
   ];
+
+  // 3D Avatar Tilt Physics
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(mouseY, [-200, 200], [15, -15]), { stiffness: 200, damping: 25 });
+  const rotateY = useSpring(useTransform(mouseX, [-200, 200], [-15, 15]), { stiffness: 200, damping: 25 });
+
+  const handleAvatarMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleAvatarMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  const triggerAiCopilot = () => {
+    window.dispatchEvent(new CustomEvent("open-ai-copilot"));
+  };
 
   return (
     <section 
       id="home" 
-      className="relative min-h-screen flex items-center justify-center py-28 lg:py-36"
+      className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-36 lg:pb-24 overflow-hidden"
     >
-      <GridBackground />
+      <NeuralBackground />
 
-      <div className="container max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-14 lg:gap-24 items-center">
         {/* Left Column - Content */}
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="lg:col-span-7 flex flex-col items-start gap-8 text-left"
+          className="lg:col-span-7 flex flex-col items-start gap-6 sm:gap-8 text-left"
         >
           {/* Status Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-border bg-card/60 backdrop-blur-md shadow-sm">
-            <span className="relative flex h-2.5 w-2.5">
+          <div className="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-border bg-card/70 backdrop-blur-md shadow-sm">
+            <span className="relative flex h-2 sm:h-2.5 w-2 sm:w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              <span className="relative inline-flex rounded-full h-2 sm:h-2.5 w-2 sm:w-2.5 bg-emerald-500"></span>
             </span>
-            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            <span className="text-[11px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Available for opportunities
             </span>
           </div>
 
           {/* Heading */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] text-foreground">
-            Hi, I'm <br />
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] text-foreground">
+            Hi, I&apos;m <br />
             <span className="bg-gradient-to-r from-teal-400 to-sky-400 bg-clip-text text-transparent">
               Sourav Halder
             </span>
           </h1>
 
           {/* Rotating Role Text */}
-          <div className="h-20 sm:h-16 flex items-center w-full">
+          <div className="h-16 sm:h-14 flex items-center w-full">
             <FlipWords 
               words={words} 
-              className="text-lg sm:text-2xl md:text-3xl text-muted-foreground font-medium"
+              className="text-base sm:text-xl md:text-2xl lg:text-3xl text-muted-foreground font-medium"
               duration={3000}
             />
           </div>
 
           {/* CTA Buttons & Social Links */}
-          <div className="flex flex-wrap items-center gap-6 mt-2">
-            <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-2">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <ShinyButton text="Let's Talk" href="#contact" />
               <a 
                 href="#projects" 
-                className="px-6 py-3 rounded-md border border-border bg-card/40 backdrop-blur-sm text-foreground font-semibold hover:bg-accent/80 transition-all active:scale-95 duration-200"
+                className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-md border border-border bg-card/40 backdrop-blur-sm text-foreground font-semibold text-sm sm:text-base hover:bg-accent/80 transition-all active:scale-95 duration-200"
               >
                 View Work
               </a>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 sm:gap-3">
               <div className="h-8 w-px bg-border hidden sm:block" /> {/* divider line */}
               
               <a
                 href="https://linkedin.com/in/sourav--halder"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-lg bg-card/40 hover:bg-accent hover:text-primary border border-border flex items-center justify-center text-muted-foreground hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-card/40 hover:bg-accent hover:text-primary border border-border flex items-center justify-center text-muted-foreground hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
                 title="LinkedIn"
               >
-                <Linkedin className="w-5 h-5" />
+                <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
               </a>
 
               <a
                 href="https://github.com/SouravHalder1996"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-lg bg-card/40 hover:bg-accent hover:text-primary border border-border flex items-center justify-center text-muted-foreground hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-card/40 hover:bg-accent hover:text-primary border border-border flex items-center justify-center text-muted-foreground hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
                 title="GitHub"
               >
-                <Github className="w-5 h-5" />
+                <Github className="w-4 h-4 sm:w-5 sm:h-5" />
               </a>
 
-              <a
-                href="/Sourav_Halder_Resume.pdf"
-                download="Sourav_Halder_Resume.pdf"
-                className="w-11 h-11 rounded-lg bg-card/40 hover:bg-accent hover:text-primary border border-border flex items-center justify-center text-muted-foreground hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
-                title="Download Resume"
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent("open-resume-modal"))}
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-card/40 hover:bg-accent hover:text-primary border border-border flex items-center justify-center text-muted-foreground hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+                title="View & Download Resume"
               >
-                <FileText className="w-5 h-5" />
-              </a>
+                <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
             </div>
           </div>
         </motion.div>
 
-        {/* Right Column - Avatar & Orbiting Skills */}
+        {/* Right Column - 3D Tilt Avatar & Orbiting Skills */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="lg:col-span-5 flex justify-center items-center h-[540px] relative select-none"
+          onMouseMove={handleAvatarMouseMove}
+          onMouseLeave={handleAvatarMouseLeave}
+          style={{
+            perspective: 1000,
+          }}
+          className="lg:col-span-5 flex justify-center items-center h-[340px] sm:h-[420px] lg:h-[520px] relative select-none"
         >
-          {/* Center Avatar Container */}
-          <div className="relative w-80 h-80 rounded-full border border-border bg-card/30 backdrop-blur-md shadow-2xl flex items-center justify-center p-2 group">
+          {/* 3D Tilting Center Container */}
+          <motion.div 
+            style={{
+              rotateX,
+              rotateY,
+              transformStyle: "preserve-3d",
+            }}
+            className="relative w-48 h-48 sm:w-60 sm:h-60 md:w-68 md:h-68 lg:w-80 lg:h-80 rounded-full border border-border/80 bg-card/40 backdrop-blur-md shadow-2xl flex items-center justify-center p-1.5 sm:p-2 group transition-shadow duration-300 hover:shadow-teal-500/10"
+          >
             {/* Outer Accent Glow */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-teal-500/10 to-sky-500/10 opacity-70 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
             
@@ -146,51 +253,39 @@ export default function Hero() {
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
-          </div>
+          </motion.div>
 
-          {/* Orbiting skill badges */}
-          {orbitCards.map((card, index) => {
-            // Calculate coordinates for circle positioning
-            const radius = 220; // Distance from center in px (expanded for larger avatar)
-            const rad = (card.angle * Math.PI) / 180;
-            const x = Math.cos(rad) * radius;
-            const y = Math.sin(rad) * radius;
-
-            return (
-              <motion.div
-                key={card.alt}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1, y: [0, -6, 0] }}
-                transition={{
-                  opacity: { delay: 0.4 + index * 0.1, type: "spring", stiffness: 150 },
-                  scale: { delay: 0.4 + index * 0.1, type: "spring", stiffness: 150 },
-                  y: {
-                    repeat: Infinity,
-                    duration: 3 + index * 0.5,
-                    ease: "easeInOut",
-                    delay: index * 0.3,
-                  }
-                }}
-                style={{
-                  position: "absolute",
-                  left: `calc(50% + ${x}px - 32px)`,
-                  top: `calc(50% + ${y}px - 32px)`,
-                }}
-                className="w-16 h-16 rounded-xl border border-border bg-card/85 backdrop-blur-sm shadow-md flex items-center justify-center p-3 hover:border-primary/50 transition-colors"
-              >
-                <div className="relative w-full h-full">
-                  <Image 
-                    src={card.icon}
-                    alt={card.alt}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </motion.div>
-            );
-          })}
+          {/* Orbiting skill badges with spring float */}
+          {orbitCards.map((card, index) => (
+            <OrbitCard key={card.alt} card={card} index={index} />
+          ))}
         </motion.div>
       </div>
+
+      {/* Interactive AI Prompt Trigger Pill at Bottom of Hero */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
+        className="mt-8 sm:mt-12 z-20 px-4 max-w-full"
+      >
+        <button
+          onClick={triggerAiCopilot}
+          className="group inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-teal-500/30 bg-card/70 hover:bg-card hover:border-teal-500/60 shadow-lg shadow-teal-500/5 backdrop-blur-md transition-all duration-300 text-xs sm:text-sm text-foreground cursor-pointer hover:scale-[1.02] active:scale-[0.98] max-w-full"
+        >
+          <div className="flex items-center gap-1.5 text-teal-400 font-bold flex-shrink-0">
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400 animate-pulse" />
+            <span>Ask AI:</span>
+          </div>
+          <span className="text-muted-foreground group-hover:text-foreground transition-colors truncate max-w-[190px] xs:max-w-[280px] sm:max-w-none text-left">
+            Ask about AI/ML, Data Science, Agentic AI, RAG & Cloud Architecture
+          </span>
+          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 group-hover:translate-x-0.5 transition-transform flex-shrink-0">
+            <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+          </div>
+        </button>
+      </motion.div>
     </section>
   );
 }
+

@@ -4,6 +4,9 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import CommandPalette from "@/components/CommandPalette";
 import ScrollToTop from "@/components/ScrollToTop";
+import AiCopilot from "@/components/AiCopilot";
+import TerminalDrawer from "@/components/TerminalDrawer";
+import ResumeModal from "@/components/ResumeModal";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -21,13 +24,13 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Sourav Halder · Data Scientist & AI ML Engineer",
-  description: "Data Scientist & AI/ML Engineer specializing in serverless cloud architectures, machine learning models, and enterprise data pipelines.",
-  keywords: ["Data Scientist", "AI Engineer", "ML Engineer", "AWS", "Python", "Databricks", "Cloud Architect"],
+  title: "Sourav Halder · AI/ML Engineer · Data Scientist · Cloud Architect",
+  description: "AI/ML Engineer & Data Scientist specializing in Agentic AI, AWS Bedrock RAG, machine learning models, and scalable AWS cloud architecture.",
+  keywords: ["AI Engineer", "ML Engineer", "Data Scientist", "Agentic AI", "GenAI Developer", "RAG Chatbots", "AWS Cloud Architect", "Databricks", "Python"],
   authors: [{ name: "Sourav Halder" }],
   openGraph: {
-    title: "Sourav Halder · Data Scientist & AI ML Engineer",
-    description: "Data Scientist & AI/ML Engineer specializing in serverless cloud architectures, machine learning models, and enterprise data pipelines.",
+    title: "Sourav Halder · AI/ML Engineer · Data Scientist · Cloud Architect",
+    description: "AI/ML Engineer & Data Scientist specializing in Agentic AI, AWS Bedrock RAG, machine learning models, and scalable AWS cloud architecture.",
     type: "website",
     url: "https://souravhalder1996.github.io",
   }
@@ -71,6 +74,9 @@ export default function RootLayout({
         <Navbar />
         <CommandPalette />
         <ScrollToTop />
+        <AiCopilot />
+        <TerminalDrawer />
+        <ResumeModal />
         <main className="flex-grow">{children}</main>
       </body>
     </html>

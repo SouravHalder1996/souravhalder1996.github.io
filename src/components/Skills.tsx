@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import SafeImage from "./SafeImage";
+import SectionHeaderDotGrid from "./SectionHeaderDotGrid";
 import {
   Code2,
   FolderOpen,
@@ -31,39 +33,76 @@ interface SkillFile {
 
 const skillFiles: SkillFile[] = [
   {
+    id: "genai",
+    filename: "genai_agents.py",
+    language: "Python",
+    langIconClass: "devicon-python-plain",
+    langColor: "text-emerald-600 dark:text-emerald-400",
+    comment: "# Multi-Agent Orchestration, RAG Knowledge Bases & LLM Gateways",
+    groups: [
+      {
+        groupName: "Agent Frameworks & Workflow Automation",
+        skills: [
+          { name: "LangChain", iconUrl: "/images/skills/langchain.svg" },
+          { name: "LangGraph", iconUrl: "/images/skills/langgraph.svg" },
+          { name: "n8n", iconUrl: "/images/skills/n8n.svg" },
+        ],
+      },
+      {
+        groupName: "GenAI & LLM Gateways",
+        skills: [
+          { name: "Hugging Face", iconUrl: "/images/skills/huggingface.svg" },
+          { name: "Portkey AI", iconUrl: "/images/skills/portkey.png" },
+        ],
+      },
+      {
+        groupName: "RAG & Vector Databases",
+        skills: [
+          { name: "Pinecone", iconUrl: "/images/skills/pinecone.svg" },
+          { name: "Supabase", iconUrl: "/images/skills/supabase.svg" },
+        ],
+      },
+      {
+        groupName: "LLMOps & Evaluation Guardrails",
+        skills: [
+          { name: "LangSmith", iconUrl: "/images/skills/langsmith.svg" },
+          { name: "Confident AI", iconUrl: "/images/skills/confident-ai.png" },
+        ],
+      },
+    ],
+  },
+  {
     id: "ds",
     filename: "data_science.ipynb",
     language: "Jupyter Notebook",
     langIconClass: "devicon-jupyter-plain",
     langColor: "text-violet-600 dark:text-violet-400",
-    comment: "# Jupyter Notebook - Machine Learning & AI Workflows",
+    comment: "# Machine Learning, Deep Learning & Predictive Modeling",
     groups: [
       {
-        groupName: "Machine Learning",
+        groupName: "Machine Learning & Modeling",
         skills: [
-          { name: "NumPy", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" },
-          { name: "Pandas", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" },
-          { name: "Scikit-Learn", iconUrl: "https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" },
-          { name: "MLflow", iconUrl: "https://cdn.brandfetch.io/idS8GMP5c8/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1742926327412" },
-          { name: "Jupyter", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg" },
+          { name: "NumPy", iconUrl: "/images/skills/numpy.svg" },
+          { name: "Pandas", iconUrl: "/images/skills/pandas.svg" },
+          { name: "Scikit-Learn", iconUrl: "/images/skills/scikit-learn.svg" },
+          { name: "MLflow", iconUrl: "/images/skills/mlflow.svg" },
+          { name: "DVC", iconUrl: "/images/skills/dvc.svg" },
+          { name: "Jupyter", iconUrl: "/images/skills/jupyter.svg" },
         ],
       },
       {
-        groupName: "Deep Learning & GenAI",
+        groupName: "Deep Learning & Neural Networks",
         skills: [
-          { name: "TensorFlow", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" },
-          { name: "Keras", iconUrl: "https://upload.wikimedia.org/wikipedia/commons/a/ae/Keras_logo.svg" },
-          { name: "Hugging Face", iconUrl: "https://huggingface.co/front/assets/huggingface_logo.svg" },
-          { name: "LangChain", iconUrl: "https://logo.svgcdn.com/s/langchain-dark.png" },
-          { name: "Portkey AI", iconUrl: "https://cdn.brandfetch.io/id-WuCPAYH/w/64/h/64/theme/light/logo.png?c=1bxid64Mup7aczewSAYMX&t=1772500256836" },
+          { name: "TensorFlow", iconUrl: "/images/skills/tensorflow.svg" },
+          { name: "Keras", iconUrl: "/images/skills/keras.svg" },
         ],
       },
       {
-        groupName: "Visualization",
+        groupName: "Visualization & Analysis",
         skills: [
-          { name: "Matplotlib", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg" },
-          { name: "Seaborn", iconUrl: "https://logo.svgcdn.com/l/seaborn-icon.png" },
-          { name: "Plotly", iconUrl: "https://logo.svgcdn.com/d/plotly-original.png" },
+          { name: "Matplotlib", iconUrl: "/images/skills/matplotlib.svg" },
+          { name: "Seaborn", iconUrl: "/images/skills/seaborn.svg" },
+          { name: "Plotly", iconUrl: "/images/skills/plotly.svg" },
         ],
       },
     ],
@@ -74,25 +113,41 @@ const skillFiles: SkillFile[] = [
     language: "YAML",
     langIconClass: "devicon-amazonwebservices-plain",
     langColor: "text-amber-600 dark:text-amber-500",
-    comment: "# Cloud Infrastructure & Data Pipelines",
+    comment: "# AWS Cloud Architecture, Data Lakehouse & Observability",
     groups: [
       {
-        groupName: "AWS Infrastructure",
+        groupName: "AWS Cloud Architecture",
         skills: [
-          { name: "AWS", iconUrl: "https://cdn.brandfetch.io/idVoqFQ-78/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1758604187114" },
-          { name: "Docker", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
-          { name: "Git", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
+          { name: "AWS", iconUrl: "/images/skills/aws.svg" },
+          { name: "AWS Lambda", iconUrl: "/images/skills/aws-lambda.svg" },
+          { name: "AWS EC2", iconUrl: "/images/skills/aws-ec2.svg" },
+          { name: "Amazon ECS", iconUrl: "/images/skills/aws-ecs.svg" },
+          { name: "AWS S3", iconUrl: "/images/skills/aws-s3.svg" },
+          { name: "AWS API Gateway", iconUrl: "/images/skills/aws-api-gateway.svg" },
+          { name: "Amazon Bedrock", iconUrl: "/images/skills/aws-bedrock.svg" },
+          { name: "Amazon SageMaker", iconUrl: "/images/skills/aws-sagemaker.svg" },
+          { name: "Amazon RDS", iconUrl: "/images/skills/aws-rds.svg" },
+          { name: "Amazon DynamoDB", iconUrl: "/images/skills/aws-dynamodb.svg" },
+          { name: "Docker", iconUrl: "/images/skills/docker.svg" },
+          { name: "Git", iconUrl: "/images/skills/git.svg" },
         ],
       },
       {
-        groupName: "Data Engineering",
+        groupName: "Data Engineering & Pipelines",
         skills: [
-          { name: "AWS Glue", iconUrl: "https://logo.svgcdn.com/l/aws-glue.png" },
-          { name: "Redshift", iconUrl: "https://logo.svgcdn.com/l/aws-redshift.png" },
-          { name: "Databricks", iconUrl: "https://cdn.brandfetch.io/idSUrLOWbH/theme/dark/symbol.svg?c=1bxid64Mup7aczewSAYMX&t=1668081624532" },
-          { name: "PostgreSQL", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
-          { name: "Airflow", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apacheairflow/apacheairflow-original.svg" },
-          { name: "n8n", iconUrl: "https://cdn.brandfetch.io/idO6_6uqJ9/theme/dark/symbol.svg?c=1bxid64Mup7aczewSAYMX&t=1763457415601" },
+          { name: "AWS Glue", iconUrl: "/images/skills/aws-glue.svg" },
+          { name: "Databricks", iconUrl: "/images/skills/databricks.svg" },
+          { name: "Redshift", iconUrl: "/images/skills/redshift.svg" },
+          { name: "PostgreSQL", iconUrl: "/images/skills/postgresql.svg" },
+          { name: "Airflow", iconUrl: "/images/skills/airflow.svg" },
+        ],
+      },
+      {
+        groupName: "Observability & Monitoring",
+        skills: [
+          { name: "AWS CloudWatch", iconUrl: "/images/skills/aws-cloudwatch.svg" },
+          { name: "Datadog", iconUrl: "/images/skills/datadog.svg" },
+          { name: "Splunk", iconUrl: "/images/skills/splunk.svg" },
         ],
       },
     ],
@@ -103,22 +158,22 @@ const skillFiles: SkillFile[] = [
     language: "Python",
     langIconClass: "devicon-python-plain",
     langColor: "text-sky-600 dark:text-sky-400",
-    comment: "# Programming Languages & Frameworks",
+    comment: "# Programming Languages & Web Frameworks",
     groups: [
       {
         groupName: "Core Languages",
         skills: [
-          { name: "Python", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
-          { name: "C", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" },
-          { name: "SQL", iconUrl: "https://www.vectorlogo.zone/logos/mysql/mysql-icon.svg" },
+          { name: "Python", iconUrl: "/images/skills/python.svg" },
+          { name: "C", iconUrl: "/images/skills/c.svg" },
+          { name: "SQL", iconUrl: "/images/skills/sql.svg" },
         ],
       },
       {
         groupName: "Web Development",
         skills: [
-          { name: "FastAPI", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" },
-          { name: "HTML5", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
-          { name: "CSS3", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" },
+          { name: "FastAPI", iconUrl: "/images/skills/fastapi.svg" },
+          { name: "HTML5", iconUrl: "/images/skills/html5.svg" },
+          { name: "CSS3", iconUrl: "/images/skills/css3.svg" },
         ],
       },
     ],
@@ -137,11 +192,11 @@ const explorerTree = [
 ];
 
 export default function Skills() {
-  const [activeFileId, setActiveFileId] = useState("ds");
-  const [openTabs, setOpenTabs] = useState<string[]>(["ds"]);
+  const [activeFileId, setActiveFileId] = useState("genai");
+  const [openTabs, setOpenTabs] = useState<string[]>(["genai", "ds", "cloud", "lang"]);
   const [lineCount, setLineCount] = useState(0);
 
-  const activeFile = skillFiles.find((f) => f.id === activeFileId)!;
+  const activeFile = skillFiles.find((f) => f.id === activeFileId) || skillFiles[0];
 
   useEffect(() => {
     // calculate layout lines matching the custom syntax structures
@@ -163,28 +218,29 @@ export default function Skills() {
     if (activeFileId === id && newTabs.length > 0) {
       setActiveFileId(newTabs[newTabs.length - 1]);
     } else if (newTabs.length === 0) {
-      setOpenTabs(["ds"]);
-      setActiveFileId("ds");
+      setOpenTabs(["genai"]);
+      setActiveFileId("genai");
     }
   }
 
   return (
-    <section id="skills" className="py-24 relative overflow-hidden bg-background scroll-mt-20">
-      {/* Background accents */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/2 rounded-full blur-3xl pointer-events-none -z-10" />
+    <section id="skills" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-transparent scroll-mt-20">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="container max-w-7xl mx-auto px-6">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="flex flex-col items-start text-left mb-16 gap-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border bg-card/40 backdrop-blur-sm text-xs font-semibold text-primary uppercase tracking-wider">
+        <div className="relative z-10 flex flex-col items-start text-left mb-10 sm:mb-16 gap-3">
+          <SectionHeaderDotGrid />
+          <div className="relative z-10 inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border bg-card/90 shadow-sm backdrop-blur-md text-xs font-semibold text-primary uppercase tracking-wider">
             <Code2 className="w-3.5 h-3.5" />
-            <span>Capabilities</span>
+            <span>Architecture & Frameworks</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground font-heading">
+          <h2 className="relative z-10 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground font-heading">
             Technical Skills
           </h2>
-          <p className="max-w-2xl text-muted-foreground text-sm sm:text-base">
+          <p className="relative z-10 max-w-2xl text-muted-foreground text-sm sm:text-base">
             Organized the way I think about engineering and automation — directly inside a simulated code editor.
           </p>
         </div>
@@ -193,24 +249,24 @@ export default function Skills() {
         <div className="relative w-full rounded-xl overflow-hidden border border-slate-200 dark:border-[#2d2d2d] bg-white dark:bg-[#1e1e1e] shadow-2xl flex flex-col font-mono text-left select-none text-slate-800 dark:text-[#d4d4d4] transition-colors duration-300">
           
           {/* Title Bar */}
-          <div className="flex items-center justify-between px-4 py-2 bg-[#ececec] dark:bg-[#2d2d2d] border-b border-slate-200 dark:border-[#1e1e1e] text-[11px] text-slate-600 dark:text-[#969696] font-sans transition-colors duration-300">
+          <div className="flex items-center justify-between px-3 sm:px-4 py-2 bg-[#ececec] dark:bg-[#2d2d2d] border-b border-slate-200 dark:border-[#1e1e1e] text-[11px] text-slate-600 dark:text-[#969696] font-sans transition-colors duration-300">
             <div className="flex items-center gap-2">
               <div className="flex gap-1.5 flex-shrink-0">
-                <span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                <span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                <span className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ff5f56]" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ffbd2e]" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#27c93f]" />
               </div>
-              <span className="ml-3 truncate max-w-[180px] sm:max-w-none">sourav-skills — VS Code</span>
+              <span className="ml-2 sm:ml-3 truncate max-w-[150px] sm:max-w-none text-[10px] sm:text-[11px]">sourav-skills — VS Code</span>
             </div>
             <div className="flex items-center gap-3 text-slate-400 dark:text-[#5f5f5f]">
               <Terminal className="w-3.5 h-3.5" />
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row h-[780px] relative">
+          <div className="flex flex-col md:flex-row h-[560px] sm:h-[660px] lg:h-[760px] relative">
             
             {/* Sidebar Explorer */}
-            <div className="hidden md:block w-52 bg-[#f3f3f3] dark:bg-[#252526] border-r border-slate-200 dark:border-[#2d2d2d] flex-shrink-0 py-2 transition-colors duration-300">
+            <div className="hidden md:block w-48 lg:w-52 bg-[#f3f3f3] dark:bg-[#252526] border-r border-slate-200 dark:border-[#2d2d2d] flex-shrink-0 py-2 transition-colors duration-300">
               <div className="px-4 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-[#858585] font-sans">
                 Explorer
               </div>
@@ -314,6 +370,47 @@ export default function Skills() {
 
                     {/* Skill Groups */}
                     <div className="space-y-6">
+                      {activeFile.id === "genai" && activeFile.groups.map((group) => (
+                        <div key={group.groupName} className="space-y-4">
+                          {/* Python comment */}
+                          <div className="h-7 leading-7 text-[#008000] dark:text-[#6a9955] italic select-none whitespace-nowrap">
+                            # {group.groupName}
+                          </div>
+                          {/* Python class declaration */}
+                          <div className="h-7 leading-7 flex items-center gap-2 pl-4 whitespace-nowrap">
+                            <span className="text-[#0000ff] dark:text-[#569cd6] font-bold transition-colors">class</span>
+                            <span className="text-[#267f99] dark:text-[#4ec9b0] transition-colors">{group.groupName.replace(/[^a-zA-Z0-9]/g, "")}:</span>
+                          </div>
+
+                          {/* Skills Grid */}
+                          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 pl-8 sm:pl-12">
+                            {group.skills.map((skill) => (
+                              <div
+                                key={skill.name}
+                                className="relative flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300 group cursor-default select-none hover:scale-[1.08] hover:-translate-y-[2px]"
+                                title={skill.name}
+                              >
+                                {/* Tooltip on hover */}
+                                <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-md bg-slate-900/95 dark:bg-slate-800/95 backdrop-blur-md text-white text-[11px] font-sans font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-30 shadow-xl border border-slate-700/60 scale-95 group-hover:scale-100">
+                                  {skill.name}
+                                </div>
+                                <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-[#252526] border border-slate-200 dark:border-[#2d2d2d] flex items-center justify-center p-2 transition-all duration-300 group-hover:border-primary/30 dark:group-hover:border-primary/30 shadow-inner">
+                                  <SafeImage
+                                    src={skill.iconUrl}
+                                    alt={skill.name}
+                                    className="w-8 h-8 object-contain filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
+                                    loading="lazy"
+                                  />
+                                </div>
+                                <span className="mt-2 text-[10.5px] font-semibold text-slate-700 dark:text-[#d4d4d4] group-hover:text-primary transition-colors duration-300 font-sans tracking-wide text-center w-full max-w-[96px] line-clamp-2 leading-tight min-h-[26px] flex items-center justify-center">
+                                  {skill.name}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+
                       {activeFile.id === "ds" && activeFile.groups.map((group, gIdx) => (
                         <div key={group.groupName} className="space-y-4">
                           {/* Jupyter cell prompt */}
@@ -332,19 +429,22 @@ export default function Skills() {
                             {group.skills.map((skill) => (
                               <div
                                 key={skill.name}
-                                className="flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300 group cursor-default select-none hover:scale-[1.08] hover:-translate-y-[2px]"
+                                className="relative flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300 group cursor-default select-none hover:scale-[1.08] hover:-translate-y-[2px]"
+                                title={skill.name}
                               >
+                                {/* Tooltip on hover */}
+                                <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-md bg-slate-900/95 dark:bg-slate-800/95 backdrop-blur-md text-white text-[11px] font-sans font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-30 shadow-xl border border-slate-700/60 scale-95 group-hover:scale-100">
+                                  {skill.name}
+                                </div>
                                 <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-[#252526] border border-slate-200 dark:border-[#2d2d2d] flex items-center justify-center p-2 transition-all duration-300 group-hover:border-primary/30 dark:group-hover:border-primary/30 shadow-inner">
-                                  <img
+                                  <SafeImage
                                     src={skill.iconUrl}
                                     alt={skill.name}
                                     className="w-8 h-8 object-contain filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
-                                    onError={(e) => {
-                                      e.currentTarget.style.display = 'none';
-                                    }}
+                                    loading="lazy"
                                   />
                                 </div>
-                                <span className="mt-2 text-[10.5px] font-semibold text-slate-700 dark:text-[#d4d4d4] group-hover:text-primary transition-colors duration-300 font-sans tracking-wide text-center truncate w-full max-w-[85px]">
+                                <span className="mt-2 text-[10.5px] font-semibold text-slate-700 dark:text-[#d4d4d4] group-hover:text-primary transition-colors duration-300 font-sans tracking-wide text-center w-full max-w-[96px] line-clamp-2 leading-tight min-h-[26px] flex items-center justify-center">
                                   {skill.name}
                                 </span>
                               </div>
@@ -369,21 +469,24 @@ export default function Skills() {
                             {group.skills.map((skill) => (
                               <div
                                 key={skill.name}
-                                className="flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300 group cursor-default select-none hover:scale-[1.08] hover:-translate-y-[2px] relative"
+                                className="relative flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300 group cursor-default select-none hover:scale-[1.08] hover:-translate-y-[2px]"
+                                title={skill.name}
                               >
+                                {/* Tooltip on hover */}
+                                <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-md bg-slate-900/95 dark:bg-slate-800/95 backdrop-blur-md text-white text-[11px] font-sans font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-30 shadow-xl border border-slate-700/60 scale-95 group-hover:scale-100">
+                                  {skill.name}
+                                </div>
                                 {/* YAML list dash prefix */}
                                 <span className="absolute left-1 top-6 text-[#e06c75] font-bold select-none text-xs hidden sm:block">-</span>
                                 <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-[#252526] border border-slate-200 dark:border-[#2d2d2d] flex items-center justify-center p-2 transition-all duration-300 group-hover:border-primary/30 dark:group-hover:border-primary/30 shadow-inner">
-                                  <img
+                                  <SafeImage
                                     src={skill.iconUrl}
                                     alt={skill.name}
                                     className="w-8 h-8 object-contain filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
-                                    onError={(e) => {
-                                      e.currentTarget.style.display = 'none';
-                                    }}
+                                    loading="lazy"
                                   />
                                 </div>
-                                <span className="mt-2 text-[10.5px] font-semibold text-slate-700 dark:text-[#d4d4d4] group-hover:text-primary transition-colors duration-300 font-sans tracking-wide text-center truncate w-full max-w-[85px]">
+                                <span className="mt-2 text-[10.5px] font-semibold text-slate-700 dark:text-[#d4d4d4] group-hover:text-primary transition-colors duration-300 font-sans tracking-wide text-center w-full max-w-[96px] line-clamp-2 leading-tight min-h-[26px] flex items-center justify-center">
                                   {skill.name}
                                 </span>
                               </div>
@@ -409,19 +512,22 @@ export default function Skills() {
                             {group.skills.map((skill) => (
                               <div
                                 key={skill.name}
-                                className="flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300 group cursor-default select-none hover:scale-[1.08] hover:-translate-y-[2px]"
+                                className="relative flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300 group cursor-default select-none hover:scale-[1.08] hover:-translate-y-[2px]"
+                                title={skill.name}
                               >
+                                {/* Tooltip on hover */}
+                                <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-md bg-slate-900/95 dark:bg-slate-800/95 backdrop-blur-md text-white text-[11px] font-sans font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-30 shadow-xl border border-slate-700/60 scale-95 group-hover:scale-100">
+                                  {skill.name}
+                                </div>
                                 <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-[#252526] border border-slate-200 dark:border-[#2d2d2d] flex items-center justify-center p-2 transition-all duration-300 group-hover:border-primary/30 dark:group-hover:border-primary/30 shadow-inner">
-                                  <img
+                                  <SafeImage
                                     src={skill.iconUrl}
                                     alt={skill.name}
                                     className="w-8 h-8 object-contain filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
-                                    onError={(e) => {
-                                      e.currentTarget.style.display = 'none';
-                                    }}
+                                    loading="lazy"
                                   />
                                 </div>
-                                <span className="mt-2 text-[10.5px] font-semibold text-slate-700 dark:text-[#d4d4d4] group-hover:text-primary transition-colors duration-300 font-sans tracking-wide text-center truncate w-full max-w-[85px]">
+                                <span className="mt-2 text-[10.5px] font-semibold text-slate-700 dark:text-[#d4d4d4] group-hover:text-primary transition-colors duration-300 font-sans tracking-wide text-center w-full max-w-[96px] line-clamp-2 leading-tight min-h-[26px] flex items-center justify-center">
                                   {skill.name}
                                 </span>
                               </div>

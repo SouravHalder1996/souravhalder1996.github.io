@@ -8,10 +8,12 @@ import Education from "@/components/Education";
 import Credentials from "@/components/Credentials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import CircuitGridBackground from "@/components/CircuitGridBackground";
 
 export default function Home() {
   return (
-    <>
+    <main className="relative min-h-screen">
+      <CircuitGridBackground />
       <Hero />
       <Metrics />
       <About />
@@ -22,6 +24,7 @@ export default function Home() {
       <Credentials />
       <Contact />
       <Footer />
-    </>
+    </main>
   );
 }
+

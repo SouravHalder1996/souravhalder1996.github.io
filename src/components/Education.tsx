@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Server, Power, ChevronDown, Cpu, Calendar, Shield, Database, GraduationCap } from "lucide-react";
+import SectionHeaderDotGrid from "./SectionHeaderDotGrid";
 
 interface BladeData {
   id: string;
@@ -39,12 +40,11 @@ const serverBlades: BladeData[] = [
     ramUsage: [true, true, false, false],
     logs: [
       "[OK] BOOT // JU_ROBOTICS_CORE_V4",
-      "[OK] KINEMATICS_MATRIX_SOLVER ACTIVE",
-      "[OK] NEURAL_PATH_PLANNING INITIALIZED",
-      "[OK] ROBOTIC_ARM_CONTROL_HOOKS ONLINE",
-      "[OK] SYSTEM_RATING: 90.36% (EXCELLENT)"
+      "[OK] INTELLIGENT_AUTOMATION_CORE ACTIVE",
+      "[OK] CONTROL_SYSTEMS_HOOKS ONLINE",
+      "[OK] SYSTEM_RATING: 90.36% (FIRST CLASS WITH DISTINCTION)"
     ],
-    description: "Specialized in robotic kinematics, autonomous control networks, computer vision, and neural network pipelines. Conducted thesis research on automated robot path-planning model designs."
+    description: "Specialized in Intelligent Automation, Robotics, Control Systems, and AI Engineering. Conducted post-graduate research and thesis with First Class Distinction (90.36%)."
   },
   {
     id: "btech",
@@ -176,15 +176,26 @@ const LiveSparkline = () => {
 
 export default function Education() {
   const [activeBladeId, setActiveBladeId] = useState<string | null>(null);
+  const [livePower, setLivePower] = useState<number>(342);
+  const [liveTemp, setLiveTemp] = useState<number>(38);
+
+  // Live telemetry subtle fluctuation
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLivePower(338 + Math.floor(Math.random() * 8));
+      setLiveTemp(37 + Math.floor(Math.random() * 3));
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
 
   const toggleBlade = (id: string) => {
     setActiveBladeId(activeBladeId === id ? null : id);
   };
 
   return (
-    <section id="education" className="py-24 relative overflow-hidden bg-background scroll-mt-20">
-      {/* Background radial accent */}
-      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-primary/2 rounded-full blur-3xl pointer-events-none -z-10" />
+    <section id="education" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-transparent scroll-mt-20">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/3 left-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none -z-10" />
 
       {/* Retro matrix glow styles */}
       <style>{`
@@ -246,29 +257,30 @@ export default function Education() {
         }
       `}</style>
 
-      <div className="container max-w-7xl mx-auto px-6">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="flex flex-col items-start text-left mb-16 gap-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200/80 dark:border-border bg-white/80 dark:bg-card/40 backdrop-blur-sm text-xs font-semibold text-primary uppercase tracking-wider">
+        <div className="relative z-10 flex flex-col items-start text-left mb-10 sm:mb-16 gap-3">
+          <SectionHeaderDotGrid />
+          <div className="relative z-10 inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200/80 dark:border-border bg-white/90 dark:bg-card/90 shadow-sm backdrop-blur-md text-xs font-semibold text-primary uppercase tracking-wider">
             <GraduationCap className="w-3.5 h-3.5" />
             <span>Academic Background</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground font-heading">
+          <h2 className="relative z-10 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground font-heading">
             Education Records
           </h2>
-          <p className="max-w-2xl text-muted-foreground text-sm sm:text-base">
+          <p className="relative z-10 max-w-2xl text-muted-foreground text-sm sm:text-base">
             Academic qualifications, specialized engineering domains, and formal credentials.
           </p>
         </div>
 
         {/* ── Outer Server Rack Enclosure ── */}
-        <div className="w-full max-w-4xl mx-auto border-4 border-slate-350 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 rounded-2xl shadow-[inset_0_4px_12px_rgba(0,0,0,0.15),0_12px_24px_-4px_rgba(0,0,0,0.15)] dark:shadow-[inset_0_4px_12px_rgba(0,0,0,0.65),0_12px_24px_-4px_rgba(0,0,0,0.3)] relative overflow-hidden flex flex-col p-1 sm:p-2 transition-all duration-300">
+        <div className="w-full max-w-4xl mx-auto border-2 sm:border-4 border-slate-350 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 rounded-2xl shadow-[inset_0_4px_12px_rgba(0,0,0,0.15),0_12px_24px_-4px_rgba(0,0,0,0.15)] dark:shadow-[inset_0_4px_12px_rgba(0,0,0,0.65),0_12px_24px_-4px_rgba(0,0,0,0.3)] relative overflow-hidden flex flex-col p-1 sm:p-2 transition-all duration-300">
           
           {/* 1. Cabinet Ventilation Grill (Top) */}
-          <div className="h-6 w-full bg-slate-200 dark:bg-slate-950 rounded-t-xl border-b border-slate-300 dark:border-slate-850 px-4 flex items-center justify-around gap-1.5 transition-colors duration-300">
+          <div className="h-5 sm:h-6 w-full bg-slate-200 dark:bg-slate-950 rounded-t-xl border-b border-slate-300 dark:border-slate-850 px-2 sm:px-4 flex items-center justify-around gap-1 sm:gap-1.5 transition-colors duration-300">
             {Array.from({ length: 24 }).map((_, i) => (
-              <div key={i} className="w-2.5 h-2 bg-slate-300 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-950 rounded-sm flex-grow shadow-inner transition-colors duration-300" />
+              <div key={i} className="w-2 sm:w-2.5 h-1.5 sm:h-2 bg-slate-300 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-950 rounded-sm flex-grow shadow-inner transition-colors duration-300" />
             ))}
           </div>
 
@@ -276,24 +288,24 @@ export default function Education() {
           <div className="flex w-full min-h-[300px] border-y border-slate-300 dark:border-slate-950 relative">
             
             {/* Left Rack Mounting Rail */}
-            <div className="w-8 sm:w-10 flex-shrink-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 border-r border-slate-300 dark:border-slate-650 flex flex-col justify-around items-center py-6 select-none border-l border-slate-250 dark:border-slate-900 transition-all duration-300">
+            <div className="w-6 sm:w-8 md:w-10 flex-shrink-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 border-r border-slate-300 dark:border-slate-650 flex flex-col justify-around items-center py-4 sm:py-6 select-none border-l border-slate-250 dark:border-slate-900 transition-all duration-300">
               {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="flex flex-col items-center gap-1.5">
-                  <span className="text-[7px] font-mono text-slate-500 dark:text-slate-400 leading-none">U{4 - i}</span>
+                <div key={i} className="flex flex-col items-center gap-1 sm:gap-1.5">
+                  <span className="text-[6px] sm:text-[7px] font-mono text-slate-500 dark:text-slate-400 leading-none">U{4 - i}</span>
                   {/* Screw Hole */}
-                  <div className="w-3.5 h-3.5 rounded-full bg-slate-350 dark:bg-slate-950 border border-slate-450 dark:border-slate-600/80 relative flex items-center justify-center shadow-inner transition-colors duration-300">
+                  <div className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 rounded-full bg-slate-350 dark:bg-slate-950 border border-slate-450 dark:border-slate-600/80 relative flex items-center justify-center shadow-inner transition-colors duration-300">
                     {/* Metal Screw Slot */}
-                    <div className="w-2.5 h-0.5 bg-slate-600 dark:bg-slate-400 rotate-45 rounded transition-colors" />
+                    <div className="w-2 sm:w-2.5 h-0.5 bg-slate-600 dark:bg-slate-400 rotate-45 rounded transition-colors" />
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Middle Container: Server Blade Chassis Modules */}
-            <div className="flex-grow p-3 bg-slate-50/50 dark:bg-slate-950/20 flex flex-col gap-5 relative transition-colors duration-300">
+            <div className="flex-grow p-2 sm:p-3 bg-slate-50/50 dark:bg-slate-950/20 flex flex-col gap-3 sm:gap-5 relative transition-colors duration-300">
               
               {/* Telemetry Dashboard Banner (Cabinet Status Info) */}
-              <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-855 rounded-xl p-3 font-mono text-[9px] sm:text-xs text-slate-600 dark:text-slate-400 flex flex-wrap items-center justify-between gap-4 shadow-inner relative overflow-hidden select-none transition-colors duration-300">
+              <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-855 rounded-xl p-2.5 sm:p-3 font-mono text-[9px] sm:text-xs text-slate-600 dark:text-slate-400 flex flex-wrap items-center justify-between gap-3 sm:gap-4 shadow-inner relative overflow-hidden select-none transition-colors duration-300">
                 
                 <div className="flex items-center gap-2 z-10">
                   <div className="relative flex h-2 w-2">
@@ -314,16 +326,16 @@ export default function Education() {
                   </div>
                   <div>
                     <span className="text-slate-555 dark:text-slate-600 font-bold uppercase font-mono">Temp:</span>{" "}
-                    <span className="text-slate-900 dark:text-slate-400 font-mono">38°C</span>
+                    <span className="text-slate-900 dark:text-slate-400 font-mono">{liveTemp}°C</span>
                   </div>
                   <div>
                     <span className="text-slate-555 dark:text-slate-600 font-bold uppercase font-mono">Power:</span>{" "}
-                    <span className="text-emerald-650 dark:text-emerald-500 font-bold font-mono">340W</span>
+                    <span className="text-emerald-650 dark:text-emerald-500 font-bold font-mono transition-all">{livePower}W</span>
                   </div>
                 </div>
               </div>
 
-              {/* Server Blades */}
+              {/* Server Blades with slide pullout physics */}
               {serverBlades.map((blade) => {
                 const isOpen = activeBladeId === blade.id;
                 return (
@@ -331,7 +343,7 @@ export default function Education() {
                     key={blade.id}
                     className={`border rounded-lg overflow-hidden transition-all duration-300 relative shadow-inner ${
                       isOpen
-                        ? "border-primary bg-white/95 dark:bg-slate-900/40 shadow-lg shadow-primary/5"
+                        ? "border-primary bg-white/95 dark:bg-slate-900/40 shadow-lg shadow-primary/10 sm:translate-x-1"
                         : "border-slate-300 dark:border-border/60 bg-white/70 dark:bg-slate-900/10 hover:bg-white/80 dark:hover:bg-slate-900/20 hover:border-primary/30"
                     }`}
                   >
@@ -418,13 +430,13 @@ export default function Education() {
                           <CoolingFan active={isOpen} />
                         </div>
 
-                        {/* Column 4: Retro LCD Grade display - fixed width to avoid text wrapping (col-span-3) */}
-                        <div className="flex justify-center md:col-span-3 z-10">
-                          <div className="flex items-center justify-between w-32 sm:w-36 bg-black border border-slate-800 rounded px-2.5 py-1.5 relative shadow-inner flex-shrink-0 select-none overflow-hidden h-[34px]">
-                            <span className="text-[7px] text-slate-400 font-bold uppercase tracking-wider select-none pr-1">
+                        {/* Column 4: Retro LCD Grade display - identical fixed size across all racks & slightly shifted right */}
+                        <div className="flex justify-center md:col-span-3 md:translate-x-3 z-10">
+                          <div className="flex items-center justify-center gap-2 bg-black border border-slate-800 rounded px-2.5 py-1.5 relative shadow-inner flex-shrink-0 select-none h-[34px] w-[148px]">
+                            <span className="text-[7.5px] sm:text-[8px] text-slate-400 font-bold uppercase tracking-wider select-none shrink-0">
                               {blade.gradeLabel}:
                             </span>
-                            <span className={`text-[10px] sm:text-xs font-black tracking-widest leading-none whitespace-nowrap ${blade.gradeColor}`}>
+                            <span className={`text-[10.5px] sm:text-xs font-black tracking-wide leading-none whitespace-nowrap ${blade.gradeColor}`}>
                               [ {blade.grade} ]
                             </span>
                           </div>

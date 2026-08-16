@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Phone, MapPin, Calendar, FileText, Send, Check, Copy } from "lucide-react";
+import { Mail, MapPin, Calendar, FileText, Send, Check, Copy } from "lucide-react";
+import SectionHeaderDotGrid from "./SectionHeaderDotGrid";
 
 const Github = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -79,32 +80,33 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-background scroll-mt-20">
+    <section id="contact" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-transparent scroll-mt-20">
       {/* Background ambient accents */}
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="container max-w-7xl mx-auto px-6">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="flex flex-col items-start text-left mb-16 gap-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border bg-card/40 backdrop-blur-sm text-xs font-semibold text-primary uppercase tracking-wider">
+        <div className="relative z-10 flex flex-col items-start text-left mb-10 sm:mb-16 gap-3">
+          <SectionHeaderDotGrid />
+          <div className="relative z-10 inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border bg-card/90 shadow-sm backdrop-blur-md text-xs font-semibold text-primary uppercase tracking-wider">
             <Mail className="w-3.5 h-3.5" />
             <span>Connect</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground font-heading">
+          <h2 className="relative z-10 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground font-heading">
             Get In Touch
           </h2>
-          <p className="max-w-2xl text-muted-foreground text-sm sm:text-base">
+          <p className="relative z-10 max-w-2xl text-muted-foreground text-sm sm:text-base">
             Let's collaborate on data pipelines, cloud architecture, or intelligent software automation.
           </p>
         </div>
 
         {/* Contact Layout Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 w-full mx-auto">
           
           {/* Left Column: Info Card Ledger (col-span-5) */}
           <div className="lg:col-span-5 flex flex-col">
-            <div className="w-full h-full border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-card/25 backdrop-blur-md rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-slate-100/50 dark:shadow-none gap-8">
+            <div className="w-full h-full border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-card/25 backdrop-blur-md rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-xl shadow-slate-100/50 dark:shadow-none gap-6 sm:gap-8">
               
               <div className="space-y-8">
                 <div className="space-y-1">
@@ -125,36 +127,22 @@ export default function Contact() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">Email</h4>
-                      <a href="mailto:halder.sourav1996@gmail.com" className="text-sm font-semibold text-foreground hover:text-primary hover:underline transition-colors truncate block">
+                      <button
+                        type="button"
+                        onClick={() => handleCopy("halder.sourav1996@gmail.com", "email")}
+                        className="text-sm font-semibold text-foreground hover:text-primary transition-colors truncate block text-left cursor-pointer"
+                        title="Click to copy email"
+                      >
                         halder.sourav1996@gmail.com
-                      </a>
+                      </button>
                     </div>
                     <button
+                      type="button"
                       onClick={() => handleCopy("halder.sourav1996@gmail.com", "email")}
-                      className="p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-muted-foreground hover:text-foreground transition-colors"
+                      className="p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                       title="Copy Email"
                     >
                       {copiedType === "email" ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
-                    </button>
-                  </div>
-
-                  {/* Phone */}
-                  <div className="flex items-center gap-4 group">
-                    <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-border flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-250">
-                      <Phone className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider">Phone</h4>
-                      <a href="tel:+918777893442" className="text-sm font-semibold text-foreground hover:text-primary hover:underline transition-colors truncate block">
-                        (+91) 8777893442
-                      </a>
-                    </div>
-                    <button
-                      onClick={() => handleCopy("+918777893442", "phone")}
-                      className="p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-muted-foreground hover:text-foreground transition-colors"
-                      title="Copy Phone Number"
-                    >
-                      {copiedType === "phone" ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                     </button>
                   </div>
 
@@ -208,14 +196,14 @@ export default function Contact() {
                   <span>GitHub</span>
                 </a>
 
-                <a
-                  href="/Sourav_Halder_Resume.pdf"
-                  download="Sourav_Halder_Resume.pdf"
-                  className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-mono font-bold transition-all duration-200 shadow-sm hover:shadow"
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new CustomEvent("open-resume-modal"))}
+                  className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-mono font-bold transition-all duration-200 shadow-sm hover:shadow cursor-pointer"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Resume PDF</span>
-                </a>
+                </button>
               </div>
 
             </div>
@@ -223,7 +211,7 @@ export default function Contact() {
 
           {/* Right Column: Contact Form (col-span-7) */}
           <div className="lg:col-span-7 flex flex-col">
-            <div className="w-full h-full border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-card/25 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col justify-between gap-8">
+            <div className="w-full h-full border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-card/25 backdrop-blur-md rounded-2xl p-5 sm:p-6 md:p-8 shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col justify-between gap-6 sm:gap-8">
               
               <div className="space-y-8 flex-1 flex flex-col">
                 <div className="space-y-1">

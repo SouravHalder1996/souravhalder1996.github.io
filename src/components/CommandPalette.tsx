@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Search, Home, User, Briefcase, GraduationCap, Code, Folder, Award, Mail, Copy, FileText, Moon, Sun, ExternalLink, Download } from "lucide-react";
+import { Search, Home, User, Briefcase, GraduationCap, Code, Folder, Award, Mail, Copy, FileText, Moon, Sun, ExternalLink, Download, Sparkles, Terminal } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface CommandItem {
@@ -19,6 +19,17 @@ export default function CommandPalette() {
   const [copiedText, setCopiedText] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+
+  // Lock background body scroll when palette is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalStyle = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalStyle;
+      };
+    }
+  }, [isOpen]);
 
   const handleCopy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
@@ -56,24 +67,32 @@ export default function CommandPalette() {
   };
 
   const commands: CommandItem[] = [
+    // Special AI & Tools
+    {
+      id: "act-ai-copilot",
+      name: "Ask Sourav AI Assistant (Agentic AI & GenAI)",
+      category: "Actions",
+      icon: <Sparkles className="w-4 h-4 text-teal-400" />,
+      action: () => {
+        setIsOpen(false);
+        window.dispatchEvent(new CustomEvent("open-ai-copilot"));
+      },
+    },
+
     // Navigation
     { id: "nav-home", name: "Go to Home", category: "Navigation", icon: <Home className="w-4 h-4" />, action: () => handleScrollTo("home") },
     { id: "nav-about", name: "Go to About", category: "Navigation", icon: <User className="w-4 h-4" />, action: () => handleScrollTo("about") },
     { id: "nav-experience", name: "Go to Experience", category: "Navigation", icon: <Briefcase className="w-4 h-4" />, action: () => handleScrollTo("experience") },
     { id: "nav-education", name: "Go to Education", category: "Navigation", icon: <GraduationCap className="w-4 h-4" />, action: () => handleScrollTo("education") },
-    { id: "nav-skills", name: "Go to Skills", category: "Navigation", icon: <Code className="w-4 h-4" />, action: () => handleScrollTo("skills") },
+    { id: "nav-skills", name: "Go to Technical Skills", category: "Navigation", icon: <Code className="w-4 h-4" />, action: () => handleScrollTo("skills") },
     { id: "nav-projects", name: "Go to Projects", category: "Navigation", icon: <Folder className="w-4 h-4" />, action: () => handleScrollTo("projects") },
     { id: "nav-credentials", name: "Go to Credentials & Certifications", category: "Navigation", icon: <Award className="w-4 h-4" />, action: () => handleScrollTo("credentials") },
     { id: "nav-contact", name: "Go to Contact", category: "Navigation", icon: <Mail className="w-4 h-4" />, action: () => handleScrollTo("contact") },
     
     // Actions
     { id: "act-copy-email", name: "Copy Email Address", category: "Actions", icon: <Copy className="w-4 h-4" />, action: () => handleCopy("halder.sourav1996@gmail.com", "Email copied!") },
-    { id: "act-copy-phone", name: "Copy Phone Number", category: "Actions", icon: <Copy className="w-4 h-4" />, action: () => handleCopy("+918777893442", "Phone copied!") },
-    { id: "act-download-cv", name: "Download Resume PDF", category: "Actions", icon: <Download className="w-4 h-4" />, action: () => {
-      const link = document.createElement("a");
-      link.href = "/Sourav_Halder_Resume.pdf";
-      link.download = "Sourav_Halder_Resume.pdf";
-      link.click();
+    { id: "act-download-cv", name: "View & Download Resume PDF", category: "Actions", icon: <FileText className="w-4 h-4" />, action: () => {
+      window.dispatchEvent(new CustomEvent("open-resume-modal"));
     }},
     { id: "act-toggle-theme", name: "Toggle Theme (Light / Dark)", category: "Actions", icon: <Sun className="w-4 h-4 dark:hidden" />, action: handleToggleTheme },
     

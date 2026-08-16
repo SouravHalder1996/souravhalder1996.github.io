@@ -7,11 +7,11 @@ import { Activity, ShieldAlert, Cpu, ArrowDownLeft } from "lucide-react";
 
 export default function Metrics() {
   return (
-    <section id="metrics" className="py-24 relative overflow-hidden bg-transparent">
-      <div className="container max-w-7xl mx-auto px-6">
+    <section id="metrics" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-transparent">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="flex flex-col items-start text-left mb-16 gap-3">
+        <div className="flex flex-col items-start text-left mb-10 sm:mb-16 gap-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border bg-card/40 backdrop-blur-sm text-xs font-semibold text-primary uppercase tracking-wider">
             <Activity className="w-3.5 h-3.5" />
             <span>Impact Telemetry</span>

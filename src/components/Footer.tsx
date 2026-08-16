@@ -58,14 +58,14 @@ export default function Footer() {
             <Github className="w-4 h-4" />
           </a>
 
-          <a
-            href="/Sourav_Halder_Resume.pdf"
-            download="Sourav_Halder_Resume.pdf"
-            className="w-8 h-8 rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-all duration-200"
-            title="Download CV"
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent("open-resume-modal"))}
+            className="w-8 h-8 rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer"
+            title="View & Download CV"
           >
             <FileText className="w-4 h-4" />
-          </a>
+          </button>
         </div>
 
       </div>
