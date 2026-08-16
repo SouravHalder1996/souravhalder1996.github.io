@@ -30,19 +30,19 @@ const orbitCards = [
 
 function OrbitCard({ card, index }: { card: typeof orbitCards[0]; index: number }) {
   const [hasError, setHasError] = useState(false);
-  const [radius, setRadius] = useState(215);
+  const [radius, setRadius] = useState(220);
 
   useEffect(() => {
     const updateRadius = () => {
       if (typeof window !== "undefined") {
-        if (window.innerWidth < 480) {
-          setRadius(125);
-        } else if (window.innerWidth < 768) {
-          setRadius(155);
+        if (window.innerWidth < 400) {
+          setRadius(118);
+        } else if (window.innerWidth < 640) {
+          setRadius(135);
         } else if (window.innerWidth < 1024) {
           setRadius(175);
         } else {
-          setRadius(215);
+          setRadius(220);
         }
       }
     };
@@ -56,44 +56,47 @@ function OrbitCard({ card, index }: { card: typeof orbitCards[0]; index: number 
   const y = Math.sin(rad) * radius;
 
   return (
-    <motion.div
-      key={card.alt}
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1, y: [0, -6, 0] }}
-      transition={{
-        opacity: { delay: 0.4 + index * 0.1, type: "spring", stiffness: 150 },
-        scale: { delay: 0.4 + index * 0.1, type: "spring", stiffness: 150 },
-        y: {
-          repeat: Infinity,
-          duration: 3 + index * 0.5,
-          ease: "easeInOut",
-          delay: index * 0.3,
-        },
-      }}
+    <div
       style={{
         position: "absolute",
         left: `calc(50% + ${x}px)`,
         top: `calc(50% + ${y}px)`,
-        transform: "translate(-50%, -50%)",
       }}
-      className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl border border-border/80 bg-card/85 backdrop-blur-md shadow-md flex items-center justify-center p-2 sm:p-2.5 lg:p-3 hover:border-primary/60 hover:scale-110 transition-all cursor-pointer"
-      title={card.alt}
+      className="-translate-x-1/2 -translate-y-1/2 pointer-events-auto z-10"
     >
-      <div className="relative w-full h-full flex items-center justify-center">
-        {!hasError ? (
-          <Image
-            src={card.icon}
-            alt={card.alt}
-            fill
-            loading="lazy"
-            className="object-contain"
-            onError={() => setHasError(true)}
-          />
-        ) : (
-          <ImageIcon className="w-5 h-5 text-muted-foreground/40" />
-        )}
-      </div>
-    </motion.div>
+      <motion.div
+        key={card.alt}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1, y: [0, -8, 0] }}
+        transition={{
+          opacity: { delay: 0.1 + index * 0.05, duration: 0.3, ease: "easeOut" },
+          scale: { delay: 0.1 + index * 0.05, type: "spring", stiffness: 350, damping: 20 },
+          y: {
+            repeat: Infinity,
+            duration: 3 + index * 0.4,
+            ease: "easeInOut",
+            delay: index * 0.2,
+          },
+        }}
+        className="w-11 h-11 xs:w-12 xs:h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl border border-border/80 bg-card/90 backdrop-blur-md shadow-lg flex items-center justify-center p-2 xs:p-2.5 sm:p-3 hover:border-primary/60 hover:scale-110 transition-all cursor-pointer group"
+        title={card.alt}
+      >
+        <div className="relative w-full h-full flex items-center justify-center">
+          {!hasError ? (
+            <Image
+              src={card.icon}
+              alt={card.alt}
+              fill
+              loading="lazy"
+              className="object-contain transition-transform duration-300 group-hover:scale-110"
+              onError={() => setHasError(true)}
+            />
+          ) : (
+            <ImageIcon className="w-5 h-5 text-muted-foreground/40" />
+          )}
+        </div>
+      </motion.div>
+    </div>
   );
 }
 
@@ -132,7 +135,7 @@ export default function Hero() {
   return (
     <section 
       id="home" 
-      className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-36 lg:pb-24 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-20 sm:pt-28 sm:pb-16 lg:pt-36 lg:pb-24 overflow-hidden"
     >
       <NeuralBackground />
 
@@ -229,7 +232,7 @@ export default function Hero() {
           style={{
             perspective: 1000,
           }}
-          className="lg:col-span-5 flex justify-center items-center h-[340px] sm:h-[420px] lg:h-[520px] relative select-none"
+          className="lg:col-span-5 flex justify-center items-center h-[340px] xs:h-[370px] sm:h-[440px] md:h-[480px] lg:h-[540px] relative select-none mb-6 sm:mb-0"
         >
           {/* 3D Tilting Center Container */}
           <motion.div 
@@ -238,7 +241,7 @@ export default function Hero() {
               rotateY,
               transformStyle: "preserve-3d",
             }}
-            className="relative w-48 h-48 sm:w-60 sm:h-60 md:w-68 md:h-68 lg:w-80 lg:h-80 rounded-full border border-border/80 bg-card/40 backdrop-blur-md shadow-2xl flex items-center justify-center p-1.5 sm:p-2 group transition-shadow duration-300 hover:shadow-teal-500/10"
+            className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-60 sm:h-60 md:w-68 md:h-68 lg:w-80 lg:h-80 rounded-full border border-border/80 bg-card/40 backdrop-blur-md shadow-2xl flex items-center justify-center p-1.5 sm:p-2 group transition-shadow duration-300 hover:shadow-teal-500/10"
           >
             {/* Outer Accent Glow */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-teal-500/10 to-sky-500/10 opacity-70 group-hover:opacity-100 blur-xl transition-opacity duration-300" />

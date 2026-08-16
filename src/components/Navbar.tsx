@@ -93,12 +93,12 @@ export default function Navbar() {
             SH
           </a>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links (Centering) */}
           <nav
             className={`hidden lg:flex items-center transition-all duration-300 ${
               isScrolled
-                ? "gap-2 xl:gap-4"
-                : "absolute left-1/2 -translate-x-1/2 gap-4 xl:gap-6"
+                ? "gap-1 xl:gap-3"
+                : "absolute left-1/2 -translate-x-1/2 gap-1.5 xl:gap-4"
             }`}
           >
             {navItems.map((item) => {
@@ -108,7 +108,7 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href}
                   className={`relative font-medium transition-all duration-300 rounded-full hover:text-foreground whitespace-nowrap ${
-                    isScrolled ? "text-xs px-2.5 py-1" : "text-sm px-3.5 py-1.5"
+                    isScrolled ? "text-xs px-2.5 py-1" : "text-xs xl:text-sm px-2.5 xl:px-3.5 py-1.5"
                   } ${
                     isActive ? "text-foreground font-semibold" : "text-muted-foreground"
                   }`}
